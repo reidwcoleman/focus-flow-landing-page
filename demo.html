@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusFlow - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e27;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 41, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1f2937;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .back-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .demo-container {
+            max-width: 1400px;
+            margin: 100px auto 60px;
+            padding: 40px;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .demo-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .demo-subtitle {
+            font-size: 20px;
+            color: #6b7280;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            color: #6b7280;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            border-color: #3b82f6;
+            color: #ffffff;
+        }
+
+        .tab-button.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #ffffff;
+        }
+
+        .demo-section {
+            display: none;
+        }
+
+        .demo-section.active {
+            display: block;
+        }
+
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .section-info {
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .info-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .info-description {
+            font-size: 16px;
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            background: #0f1729;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .feature-content h4 {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .feature-content p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .phone-container {
+            position: sticky;
+            top: 120px;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            aspect-ratio: 375 / 812;
+            background: #0f1729;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 8px #1a2332;
+            overflow: hidden;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(31,41,55,0.5);
+        }
+
+        .screen-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .screen-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .screen-content::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 2px;
+        }
+
+        .screen-header {
+            margin-bottom: 24px;
+        }
+
+        .screen-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .screen-subtitle {
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+        .demo-card {
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .demo-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .demo-card.active {
+            border-color: #3b82f6;
+            background: rgba(59,130,246,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-badge {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .badge-urgent { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .badge-high { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .badge-medium { background: rgba(59,130,246,0.2); color: #3b82f6; }
+
+        .card-meta {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #1f2937;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .subtask-list {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #1f2937;
+            display: none;
+        }
+
+        .demo-card.active .subtask-list {
+            display: block;
+        }
+
+        .subtask {
+            display: flex;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        .focus-timer {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .timer-display {
+            font-size: 64px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 16px;
+        }
+
+        .focus-button {
+            background: #3b82f6;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .app-icon {
+            aspect-ratio: 1;
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .app-icon::after {
+            content: '🚫';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            font-size: 16px;
+        }
+
+        .grade-display {
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .grade-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .course-grade {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #1a2332, #0f1729);
+            border: 1px solid #1f2937;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta-description {
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 32px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #3b82f6;
+            color: #ffffff;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .section-content {
+                grid-template-columns: 1fr;
+            }
+            .phone-container {
+                position: static;
+                margin-top: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FocusFlow</div>
+            <a href="focusflow-working.html" class="back-link">← Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1 class="demo-title">Experience FocusFlow</h1>
+            <p class="demo-subtitle">
+                Explore all the features that make FocusFlow the ultimate productivity app for students. Click through the tabs to see each feature in action.
+            </p>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-button active" onclick="showTab('tasks')">📋 Tasks</button>
+            <button class="tab-button" onclick="showTab('focus')">🎯 Focus</button>
+            <button class="tab-button" onclick="showTab('grades')">📊 Grades</button>
+            <button class="tab-button" onclick="showTab('aichat')">💬 AI Chat</button>
+            <button class="tab-button" onclick="showTab('schedule')">📅 Schedule</button>
+            <button class="tab-button" onclick="showTab('analytics')">📈 Analytics</button>
+        </div>
+
+        <!-- Tasks Tab -->
+        <div id="tasks" class="demo-section active">
+            <div class="section-content">
+                <div class="section-info">
+                    <h2 class="info-title">Smart Task Management</h2>
+                    <p class="info-description">
+                        All your assignments synced from Canvas, automatically prioritized, and broken down into manageable steps by AI. Never wonder what to work on next or feel overwhelmed by big projects.
+                    </p>
+                    
+                    <div style="background: #0f1729; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">🤖 How AI Task Breakdown Works</h3>
+                        <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 16px;">
+                            FocusFlow's AI analyzes your assignment description, due date, and your past performance to create a personalized action plan. Each subtask comes with a time estimate based on your speed.
+                        </p>
+                        <div style="background: #1a2332; border-left: 3px solid #3b82f6; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                            <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Example: "Write 5-page research paper"</div>
+                            <div style="font-size: 12px; color: #6b7280;">AI breaks into: Research sources (45 min) → Create outline (20 min) → Write intro (30 min) → Body paragraphs (2 hrs) → Conclusion (20 min) → Edit (30 min)</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🤖</div>
+                            <div class="feature-content">
+                                <h4>AI Task Breakdown</h4>
+                                <p>Complex assignments automatically divided into step-by-step subtasks. Each step includes personalized time estimates based on your work speed and the task difficulty.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-content">
+                                <h4>Smart Prioritization</h4>
+                                <p>Tasks auto-sorted by urgency using a smart algorithm: due date, grade weight, estimated time, and your current workload. High-stakes assignments always float to the top.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📚</div>
+                            <div class="feature-content">
+                                <h4>Canvas Sync</h4>
+                                <p>One-time setup connects your Canvas account. Assignments, due dates, and point values sync automatically every hour. No manual entry ever needed.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⏰</div>
+                            <div class="feature-content">
+                                <h4>Smart Reminders</h4>
+                                <p>Notifications timed based on task difficulty and your schedule. Get reminded earlier for challenging assignments, later for quick tasks. All customizable.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: #6b7280; padding: 16px; background: #0f1729; border-radius: 12px;">
+                        💡 <strong>Pro Tip:</strong> Click any task to see AI-generated subtasks. Mark subtasks complete as you go to track progress and stay motivated.
+                    </p>
+                </div>
+                <div class="phone-container">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>📶 📡 🔋</span>
+                            </div>
+                            <div class="screen-content">
+                                <div class="screen-header">
+                                    <h2 class="screen-title">Today's Tasks</h2>
+                                    <p class="screen-subtitle">6 assignments • 3 due today</p>
+                                </div>
+                                <div class="demo-card" onclick="toggleCard(this)">
+                                    <div class="card-header">
+                                        <div class="card-title">📝 Chemistry Lab Report</div>
+                                        <span class="card-badge badge-urgent">URGENT</span>
+                                    </div>
+                                    <div class="card-meta">Due today • 15% of grade • Est. 2.5 hrs</div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 60%"></div>
+                                    </div>
+                                    <div class="subtask-list">
+                                        <div class="subtask">✓ Complete experiment</div>
+                                        <div class="subtask">✓ Analyze data</div>
+                                        <div class="subtask">○ Write results</div>
+                                        <div class="subtask">○ Proofread</div>
+                                    </div>
+                                </div>
+                                <div class="demo-card" onclick="toggleCard(this)">
+                                    <div class="card-header">
+                                        <div class="card-title">📐 Calculus Problem Set</div>
+                                        <span class="card-badge badge-high">HIGH</span>
+                                    </div>
+                                    <div class="card-meta">Due tomorrow • 10% of grade • Est. 1.5 hrs</div>
+                                    <div class="subtask-list">
+                                        <div class="subtask">✓ Review notes (20 min)</div>
+                                        <div class="subtask">○ Problems 1-5 (30 min)</div>
+                                        <div class="subtask">○ Problems 6-10 (30 min)</div>
+                                        <div class="subtask">○ Check answers (10 min)</div>
+                                    </div>
+                                </div>
+                                <div class="demo-card" onclick="toggleCard(this)">
+                                    <div class="card-header">
+                                        <div class="card-title">✍️ English Essay Draft</div>
+                                        <span class="card-badge badge-high">HIGH</span>
+                                    </div>
+                                    <div class="card-meta">Due Friday • 20% of grade • Est. 4 hrs</div>
+                                </div>
+                                <div class="demo-card" onclick="toggleCard(this)">
+                                    <div class="card-header">
+                                        <div class="card-title">📖 History Reading</div>
+                                        <span class="card-badge badge-medium">MEDIUM</span>
+                                    </div>
+                                    <div class="card-meta">Due in 2 days • Est. 45 min</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Focus Tab -->
+        <div id="focus" class="demo-section">
+            <div class="section-content">
+                <div class="section-info">
+                    <h2 class="info-title">Smart Focus Mode</h2>
+                    <p class="info-description">
+                        Block distracting apps with one tap using iOS Screen Time integration. FocusFlow doesn't just remind you to focus - it physically prevents you from opening blocked apps during study sessions.
+                    </p>
+                    
+                    <div style="background: #0f1729; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">🚫 How App Blocking Really Works</h3>
+                        <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 16px;">
+                            Unlike other apps that just show a reminder, FocusFlow uses Apple's Screen Time API to truly block apps. When you try to open Instagram during a focus session, your phone won't let you. It's like having a study buddy who takes your phone away.
+                        </p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; font-weight: 600; color: #ef4444; margin-bottom: 4px;">❌ Other Apps</div>
+                                <div style="font-size: 11px; color: #6b7280;">"Please don't open TikTok" (you can ignore)</div>
+                            </div>
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border: 2px solid #3b82f6;">
+                                <div style="font-size: 12px; font-weight: 600; color: #10b981; margin-bottom: 4px;">✓ FocusFlow</div>
+                                <div style="font-size: 11px; color: #6b7280;">TikTok is physically blocked (can't open)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🚫</div>
+                            <div class="feature-content">
+                                <h4>Real App Blocking</h4>
+                                <p>Uses iOS Screen Time API to truly block apps - not just show reminders. Block social media, games, streaming, messaging, or any app that distracts you. Apps literally won't open during focus sessions.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⏱️</div>
+                            <div class="feature-content">
+                                <h4>Pomodoro Timer</h4>
+                                <p>Built-in timer with customizable intervals. Default is 25 min work / 5 min break, but adjust to what works for you. Timer automatically blocks/unblocks apps during work and break periods.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔔</div>
+                            <div class="feature-content">
+                                <h4>Smart Breaks</h4>
+                                <p>Scheduled break reminders prevent burnout. During breaks, blocked apps become accessible again. Science says breaks improve focus - FocusFlow enforces them automatically.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-content">
+                                <h4>Session Tracking</h4>
+                                <p>Every focus session is logged with duration, blocked apps, and task completion. See your total focus time per day, week, and month. Watch your study discipline improve over time.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: #6b7280; padding: 16px; background: #0f1729; border-radius: 12px;">
+                        💡 <strong>Did you know?</strong> Students using FocusFlow's app blocking complete assignments 2x faster and report 40% less phone-related stress during study sessions.
+                    </p>
+                </div>
+                <div class="phone-container">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>📶 📡 🔋</span>
+                            </div>
+                            <div class="screen-content">
+                                <div class="focus-timer">
+                                    <div class="timer-display">25:00</div>
+                                    <div style="color: #6b7280; margin-bottom: 24px;">Ready to focus</div>
+                                    <button class="focus-button">▶️ Start Focus Session</button>
+                                </div>
+                                <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid #1f2937;">
+                                    <h4 style="font-size: 14px; color: #6b7280; margin-bottom: 12px;">Blocked Apps</h4>
+                                    <div class="app-grid">
+                                        <div class="app-icon">📱</div>
+                                        <div class="app-icon">💬</div>
+                                        <div class="app-icon">📸</div>
+                                        <div class="app-icon">🎮</div>
+                                        <div class="app-icon">🎵</div>
+                                        <div class="app-icon">📺</div>
+                                        <div class="app-icon">🐦</div>
+                                        <div class="app-icon">📧</div>
+                                    </div>
+                                </div>
+                                <div class="stats-grid" style="margin-top: 32px;">
+                                    <div class="stat-card">
+                                        <div class="stat-value">12</div>
+                                        <div class="stat-label">Sessions Today</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-value">6.5h</div>
+                                        <div class="stat-label">Focus Time</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grades Tab -->
+        <div id="grades" class="demo-section">
+            <div class="section-content">
+                <div class="section-info">
+                    <h2 class="info-title">Real-Time Grade Tracking</h2>
+                    <p class="info-description">
+                        Monitor all grades in one place with automatic Canvas sync. See exactly how each assignment impacts your GPA and use the what-if calculator to predict final grades and plan your study strategy.
+                    </p>
+                    
+                    <div style="background: #0f1729; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">🔮 What-If Calculator Example</h3>
+                        <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 16px;">
+                            Stop stressing about grades. The what-if calculator shows exactly what you need to achieve your target grade.
+                        </p>
+                        <div style="background: #1a2332; border-radius: 8px; padding: 16px; margin-bottom: 12px;">
+                            <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px;">Chemistry 201: Currently 87.5% (B+)</div>
+                            <div style="font-size: 12px; color: #6b7280; line-height: 1.8;">
+                                • To get an A (93%): Need 98% on final exam<br>
+                                • To get an A- (90%): Need 92% on final exam<br>
+                                • To keep B+ (87%): Need 82% on final exam<br>
+                                • To avoid B (83%): Need 70% on final exam
+                            </div>
+                        </div>
+                        <p style="font-size: 12px; color: #6b7280;">
+                            📊 FocusFlow factors in grade weights, dropped assignments, and extra credit to give you accurate predictions.
+                        </p>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-content">
+                                <h4>Live GPA Calculator</h4>
+                                <p>Real-time GPA calculation that updates instantly when Canvas posts new grades. No more manual calculations or waiting for semester reports. See cumulative GPA, semester GPA, and per-course grades all in one place.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔮</div>
+                            <div class="feature-content">
+                                <h4>What-If Calculator</h4>
+                                <p>Input hypothetical grades on upcoming assignments and see how they'd affect your final grade. Test different scenarios: "What if I get a B on the final?" Perfect for setting realistic goals and reducing grade anxiety.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-content">
+                                <h4>Grade Trends</h4>
+                                <p>Visual charts showing your grade progression throughout the semester. See if you're trending up or down, identify problem areas early, and celebrate improvements. Each course gets its own trend line.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔔</div>
+                            <div class="feature-content">
+                                <h4>Grade Alerts</h4>
+                                <p>Instant notifications when professors post new grades. Get alerts if your GPA drops below your target or if an important assignment grade is posted. Stay informed without obsessively checking Canvas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: #6b7280; padding: 16px; background: #0f1729; border-radius: 12px;">
+                        💡 <strong>Pro Tip:</strong> Use the what-if calculator at the start of each semester to understand how much each assignment matters. Helps you prioritize high-weight assignments.
+                    </p>
+                </div>
+                <div class="phone-container">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>📶 📡 🔋</span>
+                            </div>
+                            <div class="screen-content">
+                                <div class="screen-header">
+                                    <h2 class="screen-title">My Grades</h2>
+                                    <p class="screen-subtitle">Current GPA: 3.72</p>
+                                </div>
+                                <div class="grade-display">
+                                    <div class="grade-header">
+                                        <div>🧪 Chemistry 201</div>
+                                        <div class="course-grade">A-</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 91%"></div>
+                                    </div>
+                                    <div style="font-size: 13px; color: #6b7280; margin-top: 8px;">
+                                        91.2% • Need 85% on final for A
+                                    </div>
+                                </div>
+                                <div class="grade-display">
+                                    <div class="grade-header">
+                                        <div>📐 Calculus II</div>
+                                        <div class="course-grade">B+</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 87%"></div>
+                                    </div>
+                                    <div style="font-size: 13px; color: #6b7280; margin-top: 8px;">
+                                        87.5% • Need 92% on final for A-
+                                    </div>
+                                </div>
+                                <div class="grade-display">
+                                    <div class="grade-header">
+                                        <div>📚 English Comp</div>
+                                        <div class="course-grade">A</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 94%"></div>
+                                    </div>
+                                    <div style="font-size: 13px; color: #6b7280; margin-top: 8px;">
+                                        94.1% • On track for A
+                                    </div>
+                                </div>
+                                <div class="stats-grid" style="margin-top: 16px;">
+                                    <div class="stat-card">
+                                        <div class="stat-value">3.72</div>
+                                        <div class="stat-label">Current</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-value">3.85</div>
+                                        <div class="stat-label">Projected</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Chat Tab -->
+        <div id="aichat" class="demo-section">
+            <div class="section-content">
+                <div class="section-info">
+                    <h2 class="info-title">AI Study Assistant</h2>
+                    <p class="info-description">
+                        Chat with an AI tutor that understands your coursework, assignments, and study patterns. Get instant help with homework, study strategies, or just motivation when you're struggling.
+                    </p>
+                    
+                    <div style="background: #0f1729; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">🤖 What AI Chat Can Do</h3>
+                        <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 16px;">
+                            The AI has full context of your schedule, assignments, and grades to give personalized help.
+                        </p>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
+                                <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">📚 Homework Help</div>
+                                <div style="font-size: 11px; color: #6b7280;">"Explain the Pythagorean theorem in simple terms" or "Help me understand mitosis"</div>
+                            </div>
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border-left: 3px solid #10b981;">
+                                <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">📝 Study Planning</div>
+                                <div style="font-size: 11px; color: #6b7280;">"I have 3 exams next week, help me create a study schedule"</div>
+                            </div>
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border-left: 3px solid #f59e0b;">
+                                <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">💪 Motivation</div>
+                                <div style="font-size: 11px; color: #6b7280;">"I'm feeling overwhelmed, what should I focus on first?"</div>
+                            </div>
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border-left: 3px solid #ef4444;">
+                                <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">🎯 Exam Prep</div>
+                                <div style="font-size: 11px; color: #6b7280;">"Create practice questions for my Chemistry midterm"</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🧠</div>
+                            <div class="feature-content">
+                                <h4>Context-Aware Help</h4>
+                                <p>AI knows your current assignments, grades, and schedule. Ask "What should I work on next?" and it gives personalized advice based on your actual workload and deadlines.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📚</div>
+                            <div class="feature-content">
+                                <h4>Subject Tutoring</h4>
+                                <p>Get explanations on any topic - math, science, history, writing. AI breaks down complex concepts into simple terms and provides examples. Like having a tutor available 24/7.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✍️</div>
+                            <div class="feature-content">
+                                <h4>Study Material Generation</h4>
+                                <p>Ask AI to create flashcards, practice questions, or study guides from your notes. "Turn these chemistry notes into 20 flashcards" - done in seconds.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💬</div>
+                            <div class="feature-content">
+                                <h4>Natural Conversation</h4>
+                                <p>Chat naturally like you would with a study buddy. No rigid commands or formats. AI understands context and remembers your conversation throughout the session.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: #6b7280; padding: 16px; background: #0f1729; border-radius: 12px;">
+                        💡 <strong>Academic Integrity:</strong> AI helps you understand concepts and study smarter, but doesn't do your homework for you. It's designed to promote learning, not cheating.
+                    </p>
+                </div>
+                <div class="phone-container">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>📶 📡 🔋</span>
+                            </div>
+                            <div class="screen-content">
+                                <div class="screen-header">
+                                    <h2 class="screen-title">AI Assistant</h2>
+                                    <p class="screen-subtitle">Your 24/7 study buddy</p>
+                                </div>
+
+                                <!-- Chat Messages -->
+                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                    <!-- User Message -->
+                                    <div style="display: flex; justify-content: flex-end;">
+                                        <div style="background: #3b82f6; border-radius: 16px 16px 4px 16px; padding: 12px 16px; max-width: 80%;">
+                                            <div style="font-size: 13px; line-height: 1.5;">I have a Chemistry exam tomorrow and I'm stressed. What should I focus on?</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- AI Response -->
+                                    <div style="display: flex; justify-content: flex-start;">
+                                        <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 16px 16px 16px 4px; padding: 12px 16px; max-width: 85%;">
+                                            <div style="font-size: 13px; line-height: 1.6; color: #ffffff;">
+                                                <div style="margin-bottom: 8px;">I can see your Chemistry 201 exam is tomorrow at 2 PM. Let me help you prioritize:</div>
+                                                <div style="background: #0f1729; padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 12px;">
+                                                    <strong style="color: #3b82f6;">📊 Your Grade Status:</strong><br>
+                                                    Current: 87.5% (B+)<br>
+                                                    Exam worth: 25% of final grade
+                                                </div>
+                                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">
+                                                    <strong style="color: #ffffff;">Focus on these topics:</strong><br>
+                                                    1. Stoichiometry (you struggled on HW #3)<br>
+                                                    2. Acid-base reactions (30% of exam)<br>
+                                                    3. Balancing equations (quick points)
+                                                </div>
+                                                <div style="font-size: 11px; color: #10b981;">
+                                                    💡 You have 6 hours of free time today. Study 2 hrs now, take a break, then 2 hrs tonight. You've got this!
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- User Message -->
+                                    <div style="display: flex; justify-content: flex-end;">
+                                        <div style="background: #3b82f6; border-radius: 16px 16px 4px 16px; padding: 12px 16px; max-width: 80%;">
+                                            <div style="font-size: 13px; line-height: 1.5;">Can you explain stoichiometry simply?</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- AI Response -->
+                                    <div style="display: flex; justify-content: flex-start;">
+                                        <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 16px 16px 16px 4px; padding: 12px 16px; max-width: 85%;">
+                                            <div style="font-size: 13px; line-height: 1.6;">
+                                                Think of stoichiometry like a recipe! 🍪<br><br>
+                                                If a cookie recipe needs 2 eggs and 1 cup of flour, and you have 6 eggs, you can make 3 batches.<br><br>
+                                                Same with chemical reactions - the numbers tell you the "recipe" for combining molecules.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Input Area -->
+                                <div style="position: absolute; bottom: 20px; left: 20px; right: 20px;">
+                                    <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 10px;">
+                                        <div style="flex: 1; font-size: 13px; color: #6b7280;">Ask me anything...</div>
+                                        <div style="width: 32px; height: 32px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px;">↑</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Tab -->
+        <div id="schedule" class="demo-section">
+            <div class="section-content">
+                <div class="section-info">
+                    <h2 class="info-title">Intelligent Scheduling</h2>
+                    <p class="info-description">
+                        FocusFlow learns when you're most productive and automatically suggests optimal study times. Your class schedule, assignment deadlines, and AI-scheduled study blocks all in one unified calendar view.
+                    </p>
+                    
+                    <div style="background: #0f1729; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">🤖 How AI Scheduling Works</h3>
+                        <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 16px;">
+                            After tracking your focus sessions for a week, FocusFlow's AI identifies your peak productivity hours and suggests study times accordingly.
+                        </p>
+                        <div style="background: #1a2332; border-radius: 8px; padding: 16px;">
+                            <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px;">Example: Your Productivity Pattern</div>
+                            <div style="font-size: 12px; color: #6b7280; line-height: 1.8;">
+                                🟢 <strong style="color: #10b981;">Peak Hours</strong> (9 AM - 11 AM): Schedule hardest subjects like Calculus, Chemistry<br>
+                                🟡 <strong style="color: #f59e0b;">Good Hours</strong> (2 PM - 5 PM): Medium difficulty tasks, problem sets<br>
+                                🔴 <strong style="color: #ef4444;">Low Energy</strong> (After 9 PM): Easy tasks only, review notes, flashcards
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🤖</div>
+                            <div class="feature-content">
+                                <h4>AI Study Planning</h4>
+                                <p>Learns your personal productivity patterns over time - morning person vs night owl, post-lunch slump, etc. Suggests study times when you're naturally most focused and efficient.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📅</div>
+                            <div class="feature-content">
+                                <h4>Unified Calendar</h4>
+                                <p>One calendar shows everything: class schedule from Canvas, assignment deadlines, exams, and auto-scheduled study blocks. Color-coded by type (class, study, exam) for quick scanning.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-content">
+                                <h4>Auto Scheduling</h4>
+                                <p>Automatically finds free time slots between classes and creates study blocks. Factors in assignment due dates, estimated time needed, and your productivity patterns. One-tap to accept suggested schedule.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔄</div>
+                            <div class="feature-content">
+                                <h4>Canvas Sync</h4>
+                                <p>Class schedule, office hours, and exam dates import automatically from Canvas. Updates sync every hour so your calendar is always current. Works with Canvas calendar events.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="phone-container">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>📶 📡 🔋</span>
+                            </div>
+                            <div class="screen-content">
+                                <div class="screen-header">
+                                    <h2 class="screen-title">Schedule</h2>
+                                    <p class="screen-subtitle">Tuesday, Dec 10</p>
+                                </div>
+                                <div style="background: #1a2332; border-left: 3px solid #3b82f6; padding: 16px; border-radius: 12px; margin-bottom: 12px;">
+                                    <div style="color: #6b7280; font-size: 13px;">9:00 AM - 10:30 AM</div>
+                                    <div style="font-weight: 600; margin-top: 4px;">📐 Calculus II</div>
+                                    <div style="font-size: 13px; color: #6b7280;">Room: Science 204</div>
+                                </div>
+                                <div style="background: #1a2332; border-left: 3px solid #10b981; padding: 16px; border-radius: 12px; margin-bottom: 12px;">
+                                    <div style="color: #6b7280; font-size: 13px;">11:00 AM - 12:00 PM</div>
+                                    <div style="font-weight: 600; margin-top: 4px;">📚 Study Block</div>
+                                    <div style="font-size: 13px; color: #6b7280;">Chemistry Lab Report</div>
+                                </div>
+                                <div style="background: #1a2332; border-left: 3px solid #3b82f6; padding: 16px; border-radius: 12px; margin-bottom: 12px;">
+                                    <div style="color: #6b7280; font-size: 13px;">1:00 PM - 2:30 PM</div>
+                                    <div style="font-weight: 600; margin-top: 4px;">🧪 Chemistry Lab</div>
+                                    <div style="font-size: 13px; color: #6b7280;">Room: Chemistry 105</div>
+                                </div>
+                                <div style="background: #1a2332; border-left: 3px solid #10b981; padding: 16px; border-radius: 12px; margin-bottom: 12px;">
+                                    <div style="color: #6b7280; font-size: 13px;">7:00 PM - 9:00 PM</div>
+                                    <div style="font-weight: 600; margin-top: 4px;">📚 Study Block</div>
+                                    <div style="font-size: 13px; color: #6b7280;">Essay + History Reading</div>
+                                </div>
+                                <div style="text-align: center; padding: 16px; background: rgba(59,130,246,0.1); border-radius: 12px; margin-top: 16px;">
+                                    <div style="color: #6b7280; font-size: 12px;">Total Study Time</div>
+                                    <div style="font-size: 24px; font-weight: 700; color: #3b82f6;">4.5 hours</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="demo-section">
+            <div class="section-content">
+                <div class="section-info">
+                    <h2 class="info-title">Progress Analytics</h2>
+                    <p class="info-description">
+                        Beautiful visualizations of your study habits, focus patterns, and academic progress. Identify what's working, spot problem areas early, and optimize your schedule with data-driven insights.
+                    </p>
+                    
+                    <div style="background: #0f1729; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">💡 AI Insights You'll Receive</h3>
+                        <p style="font-size: 14px; color: #6b7280; line-height: 1.6; margin-bottom: 16px;">
+                            FocusFlow analyzes your patterns and provides actionable recommendations:
+                        </p>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border-left: 3px solid #3b82f6;">
+                                <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">📊 Study Distribution</div>
+                                <div style="font-size: 11px; color: #6b7280;">"You're spending 60% of study time on Chemistry but it's only 25% of your grade. Consider redistributing time."</div>
+                            </div>
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border-left: 3px solid #10b981;">
+                                <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">⏰ Peak Hours</div>
+                                <div style="font-size: 11px; color: #6b7280;">"You're most productive 9-11 AM with 45% higher focus. Schedule difficult subjects during this time."</div>
+                            </div>
+                            <div style="background: #1a2332; padding: 12px; border-radius: 8px; border-left: 3px solid #f59e0b;">
+                                <div style="font-size: 12px; font-weight: 600; margin-bottom: 4px;">📈 Improvement</div>
+                                <div style="font-size: 11px; color: #6b7280;">"Your focus session duration increased 35% this month. Your Calculus grade improved 8% - correlation detected!"</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-content">
+                                <h4>Study Time Breakdown</h4>
+                                <p>Bar charts showing exactly how much time you spend on each subject. Compare against grade weights to see if you're allocating time efficiently. Weekly, monthly, and semester views available.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-content">
+                                <h4>Productivity Trends</h4>
+                                <p>Track focus session count, total focus hours, and task completion rate over time. See your discipline improve week by week. Identify productivity dips (midterms stress?) and successful periods.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-content">
+                                <h4>Subject Performance</h4>
+                                <p>Correlate study time with actual grades. See which subjects give you the best "return on time invested." Helps you identify if a subject needs more time or if you're over-studying.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💡</div>
+                            <div class="feature-content">
+                                <h4>AI Insights</h4>
+                                <p>Personalized recommendations based on your unique patterns. Identifies your peak hours, optimal study duration, and correlates study habits with grade improvements. Actionable advice, not just data.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: #6b7280; padding: 16px; background: #0f1729; border-radius: 12px;">
+                        💡 <strong>Research Backed:</strong> Students who regularly review their analytics improve their GPA by an average of 0.4 points within one semester, according to our beta testing.
+                    </p>
+                </div>
+                <div class="phone-container">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="status-bar">
+                                <span>9:41</span>
+                                <span>📶 📡 🔋</span>
+                            </div>
+                            <div class="screen-content">
+                                <div class="screen-header">
+                                    <h2 class="screen-title">Analytics</h2>
+                                    <p class="screen-subtitle">Last 7 days</p>
+                                </div>
+                                <div class="stats-grid">
+                                    <div class="stat-card">
+                                        <div class="stat-value">32.5h</div>
+                                        <div class="stat-label">Study Time</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-value">85%</div>
+                                        <div class="stat-label">Complete</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-value">42</div>
+                                        <div class="stat-label">Sessions</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-value">3.72</div>
+                                        <div class="stat-label">GPA</div>
+                                    </div>
+                                </div>
+                                <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 16px; padding: 20px; margin: 16px 0;">
+                                    <div style="font-weight: 600; margin-bottom: 16px;">Study Time by Subject</div>
+                                    <div style="display: flex; align-items: flex-end; height: 120px; gap: 8px;">
+                                        <div style="flex: 1; background: linear-gradient(to top, #3b82f6, #60a5fa); border-radius: 8px 8px 0 0; height: 85%;"></div>
+                                        <div style="flex: 1; background: linear-gradient(to top, #3b82f6, #60a5fa); border-radius: 8px 8px 0 0; height: 70%;"></div>
+                                        <div style="flex: 1; background: linear-gradient(to top, #3b82f6, #60a5fa); border-radius: 8px 8px 0 0; height: 55%;"></div>
+                                        <div style="flex: 1; background: linear-gradient(to top, #3b82f6, #60a5fa); border-radius: 8px 8px 0 0; height: 40%;"></div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 11px; color: #6b7280;">
+                                        <span>Chem</span>
+                                        <span>Calc</span>
+                                        <span>Eng</span>
+                                        <span>Hist</span>
+                                    </div>
+                                </div>
+                                <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 16px;">
+                                    <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">💡 AI Insight</div>
+                                    <div style="font-size: 13px; color: #6b7280; line-height: 1.6;">
+                                        You're most productive 9-11 AM. Schedule hardest tasks during this time.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="cta-title">Ready to transform your academic life?</h2>
+            <p class="cta-description">
+                Join thousands of students using FocusFlow to achieve better grades and reduce stress.
+            </p>
+            <a href="focusflow-working.html" class="cta-button">Join the Waitlist Now</a>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.demo-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function toggleCard(card) {
+            const wasActive = card.classList.contains('active');
+            document.querySelectorAll('.demo-card').forEach(c => c.classList.remove('active'));
+            if (!wasActive) card.classList.add('active');
+        }
+    </script>
+</body>
+</html>
