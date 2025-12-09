@@ -524,6 +524,25 @@
             }
         }
 
+        /* Form Message */
+        .form-message {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .form-message.hidden {
+            display: none;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
         /* Loading spinner */
         .spinner {
             display: inline-block;
@@ -637,20 +656,22 @@
             The AI-powered student app that syncs with Canvas, breaks down assignments, blocks distractions, and helps you achieve better grades
         </p>
 
-        <form class="waitlist-form" onsubmit="handleSubmit(event)" style="max-width: 580px; margin: 0 auto 28px auto;">
+        <form class="waitlist-form" id="waitlistForm" onsubmit="handleSubmit(event)" style="max-width: 580px; margin: 0 auto 28px auto;">
             <div style="position: relative; display: flex; gap: 14px; background: #1a2332; border: 2px solid #1f2937; border-radius: 16px; padding: 10px; transition: all 0.3s; box-shadow: 0 4px 16px rgba(0,0,0,0.2);" onmouseover="this.style.borderColor='#3b82f6'; this.style.boxShadow='0 8px 24px rgba(59,130,246,0.2)'" onmouseout="this.style.borderColor='#1f2937'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.2)'">
                 <input 
                     type="email" 
-                    id="email" 
+                    id="emailInput" 
                     placeholder="Enter your email"
                     required
                     style="flex: 1; background: transparent; border: none; padding: 18px 24px; font-size: 18px; color: #ffffff; outline: none;"
                 >
-                <button type="submit" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(59,130,246,0.3); white-space: nowrap;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(59,130,246,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)'">
+                <button type="submit" id="submitButton" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; padding: 18px 40px; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(59,130,246,0.3); white-space: nowrap;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(59,130,246,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(59,130,246,0.3)'">
                     Join Waitlist
                 </button>
             </div>
         </form>
+        
+        <div id="formMessage" class="form-message hidden" style="max-width: 580px; margin: 0 auto 16px auto;"></div>
         
         <a href="demo.html" style="display: inline-flex; align-items: center; gap: 10px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); color: #3b82f6; padding: 14px 28px; border-radius: 12px; font-size: 17px; font-weight: 600; text-decoration: none; transition: all 0.3s; margin-bottom: 24px;" onmouseover="this.style.background='rgba(59,130,246,0.15)'; this.style.borderColor='rgba(59,130,246,0.5)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(59,130,246,0.1)'; this.style.borderColor='rgba(59,130,246,0.3)'; this.style.transform='translateY(0)'">
             <span style="font-size: 20px;">👀</span>
