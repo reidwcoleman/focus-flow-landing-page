@@ -40,6 +40,85 @@
         .logo {
             font-size: 24px;
             font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #ffffff;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.cta {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-link.cta::after {
+            display: none;
+        }
+
+        .nav-link.cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-nav-links {
+            display: none;
         }
 
         .back-link {
@@ -467,6 +546,51 @@
                 font-size: 20px;
             }
 
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .mobile-nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 41, 0.98);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid #1f2937;
+                padding: 20px;
+                flex-direction: column;
+                gap: 16px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .mobile-nav-links.active {
+                display: flex;
+            }
+
+            .mobile-nav-links .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+                border-radius: 8px;
+                background: rgba(59, 130, 246, 0.1);
+                border: 1px solid rgba(59, 130, 246, 0.2);
+            }
+
+            .mobile-nav-links .nav-link.cta {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                border: none;
+            }
+
+            .mobile-nav-links .nav-link::after {
+                display: none;
+            }
+
             .back-link {
                 font-size: 13px;
             }
@@ -593,7 +717,17 @@
     <nav>
         <div class="nav-container">
             <div class="logo">FocusFlow</div>
-            <a href="https://focusflow.info" class="back-link">← Back to Home</a>
+            <div class="nav-links">
+                <a href="https://focusflow.info" class="nav-link">Home</a>
+                <a href="updates.html" class="nav-link">Updates</a>
+                <a href="demo.html" class="nav-link cta active">Try Demo</a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleMobileMenu()">☰</button>
+            <div class="mobile-nav-links" id="mobileNavLinks">
+                <a href="https://focusflow.info" class="nav-link">Home</a>
+                <a href="updates.html" class="nav-link">Updates</a>
+                <a href="demo.html" class="nav-link cta active">Try Demo</a>
+            </div>
         </div>
     </nav>
 
@@ -1348,6 +1482,19 @@
             document.querySelectorAll('.demo-card').forEach(c => c.classList.remove('active'));
             if (!wasActive) card.classList.add('active');
         }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNavLinks');
+            mobileNav.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-nav-links .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileNavLinks').classList.remove('active');
+            });
+        });
     </script>
 </body>
 </html>
