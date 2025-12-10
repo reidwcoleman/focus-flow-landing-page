@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates - FocusFlow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e27;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 41, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #1f2937;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #ffffff;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.cta {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-link.cta::after {
+            display: none;
+        }
+
+        .nav-link.cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-nav-links {
+            display: none;
+        }
+
+        /* Header */
+        .header {
+            padding: 140px 40px 80px 40px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        .header-badge span {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .header-title {
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-description {
+            font-size: 20px;
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        /* Updates Grid */
+        .updates-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 40px 80px 40px;
+        }
+
+        .update-card {
+            background: #1a2332;
+            border: 1px solid #1f2937;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 32px;
+            transition: all 0.3s;
+        }
+
+        .update-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .update-date {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .update-badge {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .update-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .update-content {
+            font-size: 16px;
+            color: #d1d5db;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .update-content p {
+            margin-bottom: 16px;
+        }
+
+        .update-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 20px 0;
+        }
+
+        .update-list li {
+            padding-left: 28px;
+            margin-bottom: 12px;
+            position: relative;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .update-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .update-footer {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .update-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            max-width: 800px;
+            margin: 60px auto 80px auto;
+            padding: 60px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a2332 0%, #0f1729 100%);
+            border: 1px solid #3b82f6;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15);
+        }
+
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .cta-description {
+            font-size: 18px;
+            color: #9ca3af;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #ffffff;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.45);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 1px solid #1f2937;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .mobile-nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 23, 41, 0.98);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid #1f2937;
+                padding: 20px;
+                flex-direction: column;
+                gap: 16px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            }
+
+            .mobile-nav-links.active {
+                display: flex;
+            }
+
+            .mobile-nav-links .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+                border-radius: 8px;
+                background: rgba(59, 130, 246, 0.1);
+                border: 1px solid rgba(59, 130, 246, 0.2);
+            }
+
+            .mobile-nav-links .nav-link.cta {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                border: none;
+            }
+
+            .mobile-nav-links .nav-link::after {
+                display: none;
+            }
+
+            .header {
+                padding: 100px 20px 60px 20px;
+            }
+
+            .header-title {
+                font-size: 36px;
+            }
+
+            .header-description {
+                font-size: 16px;
+            }
+
+            .updates-container {
+                padding: 0 20px 60px 20px;
+            }
+
+            .update-card {
+                padding: 28px 24px;
+            }
+
+            .update-title {
+                font-size: 24px;
+            }
+
+            .update-content {
+                font-size: 15px;
+            }
+
+            .cta-section {
+                padding: 40px 24px;
+                margin: 40px 20px 60px 20px;
+            }
+
+            .cta-title {
+                font-size: 28px;
+            }
+
+            .cta-description {
+                font-size: 16px;
+            }
+
+            .cta-button {
+                width: 100%;
+                padding: 14px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-title {
+                font-size: 32px;
+            }
+
+            .update-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FocusFlow</div>
+            <div class="nav-links">
+                <a href="https://focusflow.info" class="nav-link">Home</a>
+                <a href="updates.html" class="nav-link active">Updates</a>
+                <a href="demo.html" class="nav-link cta">Try Demo</a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleMobileMenu()">☰</button>
+            <div class="mobile-nav-links" id="mobileNavLinks">
+                <a href="https://focusflow.info" class="nav-link">Home</a>
+                <a href="updates.html" class="nav-link active">Updates</a>
+                <a href="demo.html" class="nav-link cta">Try Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="header">
+        <div class="header-badge">
+            <span>📰 LATEST NEWS</span> What We're Building
+        </div>
+        <h1 class="header-title">
+            Product <span class="gradient-text">Updates</span>
+        </h1>
+        <p class="header-description">
+            Follow along as we build FocusFlow. We're sharing our progress, new features, and what's coming next.
+        </p>
+    </section>
+
+    <!-- Updates -->
+    <div class="updates-container">
+        <!-- Update 1 -->
+        <article class="update-card">
+            <div class="update-header">
+                <span class="update-date">December 9, 2025</span>
+                <span class="update-badge">Development</span>
+            </div>
+            <h2 class="update-title">🎉 Website & Demo Launch</h2>
+            <div class="update-content">
+                <p>
+                    We're excited to announce the launch of our new website and interactive demo! You can now explore all of FocusFlow's features through our comprehensive demo page.
+                </p>
+                <p><strong>What's New:</strong></p>
+                <ul class="update-list">
+                    <li>Brand new landing page with detailed feature breakdowns</li>
+                    <li>Interactive demo with 6 tabs showcasing every feature</li>
+                    <li>AI Chat interface preview with realistic conversations</li>
+                    <li>Mobile-optimized experience across all pages</li>
+                    <li>Waitlist signup with exclusive early access benefits</li>
+                </ul>
+                <p>
+                    The demo gives you a real feel for how FocusFlow will help you manage assignments, stay focused, and improve your grades. Check it out and let us know what you think!
+                </p>
+            </div>
+            <div class="update-footer">
+                <span class="update-tag">Demo</span>
+                <span class="update-tag">Website</span>
+                <span class="update-tag">Design</span>
+            </div>
+        </article>
+
+        <!-- Update 2 -->
+        <article class="update-card">
+            <div class="update-header">
+                <span class="update-date">December 5, 2025</span>
+                <span class="update-badge">Product</span>
+            </div>
+            <h2 class="update-title">🤖 AI Study Assistant Development</h2>
+            <div class="update-content">
+                <p>
+                    We've been hard at work on one of our most exciting features: the AI Study Assistant. This conversational AI will be your 24/7 study buddy, helping with everything from homework explanations to exam prep.
+                </p>
+                <p><strong>What the AI Can Do:</strong></p>
+                <ul class="update-list">
+                    <li>Answer subject-specific questions in simple, understandable terms</li>
+                    <li>Create custom study materials (flashcards, practice questions, study guides)</li>
+                    <li>Provide personalized study recommendations based on your schedule and grades</li>
+                    <li>Help break down complex topics into manageable chunks</li>
+                    <li>Offer motivation and study strategies when you're feeling overwhelmed</li>
+                </ul>
+                <p>
+                    The AI has full context of your assignments, grades, and schedule, so it can give truly personalized advice. We're currently in testing and will be ready for beta soon!
+                </p>
+            </div>
+            <div class="update-footer">
+                <span class="update-tag">AI</span>
+                <span class="update-tag">Chat</span>
+                <span class="update-tag">Beta</span>
+            </div>
+        </article>
+
+        <!-- Update 3 -->
+        <article class="update-card">
+            <div class="update-header">
+                <span class="update-date">December 1, 2025</span>
+                <span class="update-badge">Milestone</span>
+            </div>
+            <h2 class="update-title">🎯 Canvas Integration Complete</h2>
+            <div class="update-content">
+                <p>
+                    Big milestone! We've completed the Canvas LMS integration, which means FocusFlow can now automatically sync all your courses, assignments, due dates, and grades in real-time.
+                </p>
+                <p><strong>Key Features:</strong></p>
+                <ul class="update-list">
+                    <li>One-click authentication with your Canvas account</li>
+                    <li>Automatic hourly syncing of new assignments and grade updates</li>
+                    <li>Real-time GPA calculator that updates as grades are posted</li>
+                    <li>Support for weighted grades, dropped assignments, and extra credit</li>
+                    <li>Calendar sync for class schedules and office hours</li>
+                </ul>
+                <p>
+                    This integration is the foundation of FocusFlow - no more manual data entry, everything just works automatically. We're currently testing with 50 beta users across different universities.
+                </p>
+            </div>
+            <div class="update-footer">
+                <span class="update-tag">Canvas</span>
+                <span class="update-tag">Integration</span>
+                <span class="update-tag">Sync</span>
+            </div>
+        </article>
+
+        <!-- Update 4 -->
+        <article class="update-card">
+            <div class="update-header">
+                <span class="update-date">November 28, 2025</span>
+                <span class="update-badge">Research</span>
+            </div>
+            <h2 class="update-title">📊 Student Research Insights</h2>
+            <div class="update-content">
+                <p>
+                    We've completed our initial research phase with 200+ college students to understand their biggest productivity challenges. The results are shaping everything we build.
+                </p>
+                <p><strong>What We Learned:</strong></p>
+                <ul class="update-list">
+                    <li>78% of students feel overwhelmed by managing multiple deadlines</li>
+                    <li>65% struggle with phone distractions during study sessions</li>
+                    <li>82% wish they had better visibility into how grades affect their GPA</li>
+                    <li>Students spend an average of 45 minutes per week just organizing assignments</li>
+                    <li>The #1 requested feature: AI that breaks down large projects into smaller tasks</li>
+                </ul>
+                <p>
+                    These insights confirm that students need a comprehensive solution - not just another to-do list app. FocusFlow is being designed to address all these pain points in one integrated experience.
+                </p>
+            </div>
+            <div class="update-footer">
+                <span class="update-tag">Research</span>
+                <span class="update-tag">Insights</span>
+                <span class="update-tag">Students</span>
+            </div>
+        </article>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <h2 class="cta-title">Want early access?</h2>
+        <p class="cta-description">
+            Join 10,000+ students on our waitlist and be the first to experience FocusFlow when we launch.
+        </p>
+        <a href="https://focusflow.info" class="cta-button">Join the Waitlist</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 FocusFlow. Built for students, by students.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNavLinks');
+            mobileNav.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-nav-links .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileNavLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
