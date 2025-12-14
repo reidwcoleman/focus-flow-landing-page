@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusFlow - AI-Powered Student Productivity | Join Waitlist</title>
+    <title>FocusTwin AI - The AI that runs your school life</title>
+    <meta name="description" content="FocusTwin AI automatically organizes homework, tests, and study plans — no typing required.">
     <style>
         * {
             margin: 0;
@@ -11,15 +12,27 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0a0e27;
-            color: #ffffff;
-            overflow-x: hidden;
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-blue-light: #60a5fa;
+            --dark-bg: #0a0e27;
+            --dark-surface: #1a2332;
+            --dark-surface-light: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
         }
 
-        body.modal-open {
-            overflow: hidden;
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
         /* Navigation */
@@ -27,10 +40,16 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 23, 41, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #1f2937;
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 14, 39, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         .nav-container {
@@ -43,593 +62,167 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
             display: flex;
             gap: 32px;
             align-items: center;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         .nav-link {
-            color: #d1d5db;
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 15px;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             position: relative;
         }
 
         .nav-link:hover {
-            color: #ffffff;
+            color: var(--text-primary);
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #3b82f6, #60a5fa);
-            transition: width 0.3s;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            color: #ffffff;
-        }
-
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        .nav-link.cta {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 8px;
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 10px;
             font-weight: 600;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .nav-link.cta::after {
-            display: none;
-        }
-
-        .nav-link.cta:hover {
+        .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        .mobile-nav-links {
-            display: none;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
 
         /* Hero Section */
         .hero {
-            padding: 160px 40px 80px 40px;
+            padding: 180px 40px 120px;
             text-align: center;
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
+            position: relative;
         }
 
-        h1 {
-            font-size: 64px;
-            font-weight: 700;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -1px;
+            margin-bottom: 28px;
+            letter-spacing: -2px;
+            position: relative;
+            z-index: 1;
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+        .hero .highlight {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero-description {
-            font-size: 20px;
-            color: #6b7280;
-            margin-bottom: 40px;
-            line-height: 1.6;
-            max-width: 700px;
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            line-height: 1.5;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-        }
-
-        /* Waitlist Form */
-        .waitlist-container {
-            max-width: 500px;
-            margin: 0 auto 60px auto;
-        }
-
-        .waitlist-form {
-            display: flex;
-            gap: 12px;
-            flex-direction: column;
-        }
-
-        .email-input {
-            background: #1a2332;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 16px 20px;
-            font-size: 16px;
-            color: #ffffff;
-            transition: all 0.2s;
-            width: 100%;
-        }
-
-        .email-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .email-input::placeholder {
-            color: #6b7280;
-        }
-
-        .submit-button {
-            background: #3b82f6;
-            color: #ffffff;
-            padding: 16px 32px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-        }
-
-        .submit-button:hover:not(:disabled) {
-            background: #2563eb;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-        }
-
-        .submit-button:disabled {
-            background: #374151;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .form-message {
-            text-align: center;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            margin-top: 12px;
-        }
-
-        .form-message.error {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .form-message.hidden {
-            display: none;
-        }
-
-        .waitlist-note {
-            text-align: center;
-            font-size: 13px;
-            color: #6b7280;
-            margin-top: 16px;
-        }
-
-        /* Success Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1a2332 0%, #0f1729 100%);
-            border: 2px solid #3b82f6;
-            border-radius: 28px;
-            max-width: 700px;
-            width: 100%;
-            padding: 48px 40px;
-            text-align: center;
+            font-weight: 400;
             position: relative;
-            transform: scale(0.95) translateY(20px);
-            transition: transform 0.3s ease;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 120px rgba(59, 130, 246, 0.25);
-            margin: auto;
-            max-height: 90vh;
-            overflow-y: auto;
+            z-index: 1;
         }
 
-        .modal-overlay.visible .modal-content {
-            transform: scale(1) translateY(0);
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
         }
 
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-            background: #0f1729;
-            border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #3b82f6;
-            border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb:hover {
-            background: #2563eb;
-        }
-
-        .modal-icon {
-            font-size: 84px;
-            margin: 0 auto 20px auto;
-            animation: celebration 0.6s ease-out;
-            line-height: 1;
-        }
-
-        @keyframes celebration {
-            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-            50% { transform: scale(1.15) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        .modal-title {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-
-        .modal-description {
+        .btn {
+            padding: 16px 40px;
+            border-radius: 12px;
             font-size: 17px;
-            color: #a0a7b4;
-            line-height: 1.6;
-            margin-bottom: 28px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .modal-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 28px;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
         }
 
-        .modal-stat {
-            background: rgba(59, 130, 246, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            border-radius: 16px;
-            padding: 20px 12px;
-            transition: all 0.3s;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.5);
         }
 
-        .modal-stat:hover {
-            background: rgba(59, 130, 246, 0.18);
+        .btn-secondary {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-blue-light);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.15);
             border-color: rgba(59, 130, 246, 0.5);
             transform: translateY(-2px);
         }
 
-        .modal-stat-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #60a5fa;
-            margin-bottom: 4px;
-            line-height: 1;
-        }
-
-        .modal-stat-label {
-            font-size: 11px;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-
-        .modal-features {
-            background: #0f1729;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 20px;
-            padding: 24px;
-            text-align: left;
-            margin-bottom: 24px;
-        }
-
-        .modal-features-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #e5e7eb;
-            text-align: center;
-            letter-spacing: -0.3px;
-        }
-
-        .modal-feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 14px;
-            background: rgba(59, 130, 246, 0.06);
-            border-radius: 12px;
-            transition: all 0.3s;
-            margin-bottom: 10px;
-            border: 1px solid transparent;
-        }
-
-        .modal-feature-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .modal-feature-item:hover {
-            background: rgba(59, 130, 246, 0.12);
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateX(4px);
-        }
-
-        .feature-check {
-            color: #10b981;
-            font-size: 22px;
-            font-weight: 700;
-            flex-shrink: 0;
-            line-height: 1;
-        }
-
-        .feature-text {
+        .trust-badge {
             font-size: 14px;
-            color: #d1d5db;
-            line-height: 1.6;
-        }
-
-        .feature-text strong {
-            color: #e5e7eb;
-            font-weight: 600;
-        }
-
-        .modal-timeline {
-            background: linear-gradient(90deg, rgba(59, 130, 246, 0.12), rgba(16, 185, 129, 0.12));
-            border-left: 4px solid #3b82f6;
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin-bottom: 28px;
-            text-align: left;
-        }
-
-        .modal-timeline-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #60a5fa;
-            margin-bottom: 8px;
-            letter-spacing: -0.2px;
-        }
-
-        .modal-timeline-text {
-            font-size: 13px;
-            color: #a0a7b4;
-            line-height: 1.7;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .modal-button {
-            flex: 1;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: #ffffff;
-            padding: 16px 20px;
-            border-radius: 14px;
-            border: none;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
-        }
-
-        .modal-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.45);
-        }
-
-        .modal-button-secondary {
-            background: rgba(59, 130, 246, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.35);
-            color: #60a5fa;
-            box-shadow: none;
-        }
-
-        .modal-button-secondary:hover {
-            background: rgba(59, 130, 246, 0.18);
-            border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: none;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 22px;
-            cursor: pointer;
+            color: var(--text-muted);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
-            font-weight: 300;
-            line-height: 1;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
         }
 
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
-        }
-            transform: translateY(0);
-        }
-
-        .modal-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 24px auto;
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-        }
-
-        .modal-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-
-        .modal-description {
-            font-size: 16px;
-            color: #6b7280;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .modal-features {
-            background: #0f1729;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: left;
-            margin-bottom: 24px;
-        }
-
-        .modal-feature-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 0;
-        }
-
-        .modal-feature-item:not(:last-child) {
-            border-bottom: 1px solid #1f2937;
-        }
-
-        .feature-check {
-            width: 24px;
-            height: 24px;
-            background: #3b82f6;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 14px;
-        }
-
-        .feature-text {
-            font-size: 14px;
-            color: #ffffff;
-        }
-
-        .modal-button {
-            background: #3b82f6;
-            color: #ffffff;
-            padding: 14px 32px;
-            border-radius: 10px;
-            border: none;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-        }
-
-        .modal-button:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: transparent;
-            border: none;
-            color: #6b7280;
-            font-size: 28px;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: all 0.2s;
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            background: #0f1729;
-            color: #ffffff;
-        }
-
-        /* Features Grid */
-        .features {
-            padding: 80px 40px;
+        /* Section Styles */
+        section {
+            padding: 100px 40px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -637,8 +230,8 @@
         .section-title {
             font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #3b82f6;
+            letter-spacing: 2px;
+            color: var(--primary-blue);
             text-align: center;
             margin-bottom: 16px;
             font-weight: 600;
@@ -649,1172 +242,607 @@
             font-weight: 800;
             text-align: center;
             margin-bottom: 70px;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: -1.5px;
         }
 
-        .features-grid {
+        /* Feature Showcase */
+        .feature-showcase {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            gap: 80px;
+            margin-bottom: 80px;
         }
 
-        .feature-card {
-            background: linear-gradient(135deg, #1a2332 0%, #151d2e 100%);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 20px;
-            padding: 32px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
-        .feature-card:hover {
-            border-color: rgba(59, 130, 246, 0.5);
-            transform: translateY(-6px);
-            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.1);
-            background: linear-gradient(135deg, #1f2937 0%, #1a2332 100%);
+        .feature-row.reverse {
+            direction: rtl;
         }
 
-        .feature-icon {
-            font-size: 42px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.3));
+        .feature-row.reverse > * {
+            direction: ltr;
         }
 
-        .feature-title {
-            font-size: 20px;
+        .feature-content h3 {
+            font-size: 36px;
             font-weight: 700;
-            margin-bottom: 14px;
-            color: #f3f4f6;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
 
-        .feature-description {
-            font-size: 15px;
-            color: #9ca3af;
+        .feature-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
             line-height: 1.7;
+            margin-bottom: 24px;
         }
 
-        /* Stats Section */
-        .stats {
-            padding: 100px 40px;
-            background: linear-gradient(135deg, #1a2332 0%, #0f1729 100%);
-            border-top: 1px solid rgba(59, 130, 246, 0.2);
-            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            padding-left: 32px;
             position: relative;
+            font-size: 16px;
+            color: var(--text-secondary);
         }
 
-        .stats::before {
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .feature-visual {
+            background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-surface-light) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-visual:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .feature-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-visual:hover::before {
+            opacity: 1;
+        }
+
+        .icon-placeholder {
+            font-size: 80px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-surface-light) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
-            pointer-events: none;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
 
-        .stats-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 50px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-number {
-            font-size: 56px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.4));
-        }
-
-        .stat-label {
-            font-size: 15px;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            font-weight: 600;
-        }
-
-        /* How It Works */
-        .how-it-works {
-            padding: 100px 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 70px;
-        }
-
-        .step {
-            text-align: center;
-            padding: 36px 28px;
-            background: linear-gradient(135deg, #1a2332 0%, #151d2e 100%);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 20px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .step:hover {
-            transform: translateY(-6px);
+        .pricing-card:hover {
+            transform: translateY(-8px);
             border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.25);
         }
 
-        .step-number {
-            width: 70px;
-            height: 70px;
-            border-radius: 35px;
-            background: linear-gradient(135deg, #1a2332 0%, #0f1729 100%);
-            border: 3px solid #3b82f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 0 auto 24px auto;
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+        .pricing-card:hover::before {
+            transform: scaleX(1);
         }
 
-        .step-title {
-            font-size: 20px;
+        .pricing-card.featured {
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+        }
+
+        .pricing-card.featured::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-badge {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 700;
-            margin-bottom: 14px;
-            color: #f3f4f6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 20px;
         }
 
-        .step-description {
-            font-size: 15px;
-            color: #9ca3af;
-            line-height: 1.7;
+        .pricing-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
 
-        /* Final CTA */
-        .final-cta {
-            padding: 100px 40px;
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .final-cta h2 {
+        .pricing-price {
             font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: -0.5px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -2px;
         }
 
-        .final-cta p {
+        .pricing-price span {
             font-size: 18px;
-            color: #6b7280;
-            margin-bottom: 40px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .pricing-period {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 32px 0;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            padding-left: 28px;
+            position: relative;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-cta:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
         }
 
         /* Footer */
         footer {
-            background: #0f1729;
-            border-top: 1px solid #1f2937;
-            padding: 40px 40px 30px 40px;
+            background: var(--dark-surface);
+            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            padding: 60px 40px 40px;
             text-align: center;
         }
 
-        .footer-text {
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+
+        .footer-tagline {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
             font-size: 14px;
-            color: #6b7280;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-blue-light);
+        }
+
+        .footer-copyright {
+            color: var(--text-muted);
+            font-size: 13px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 40px;
-            }
-
-            .hero-description {
-                font-size: 18px;
-            }
-
-            .section-heading {
-                font-size: 32px;
-            }
-
-            .final-cta h2 {
-                font-size: 36px;
-            }
-
-            .modal-content {
-                padding: 32px 24px;
-            }
-
-            .modal-title {
-                font-size: 28px;
-            }
-        }
-
-        /* Form Message */
-        .form-message {
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .form-message.hidden {
-            display: none;
-        }
-
-        .form-message.error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-        }
-
-        /* Loading spinner */
-        .spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: spin 0.6s linear infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { 
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% { 
-                transform: scale(1.15);
-                opacity: 0.8;
-            }
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-container {
-                padding: 16px 20px;
-            }
-
             .nav-links {
                 display: none;
             }
 
-            .mobile-menu-toggle {
-                display: block;
+            .hero h1 {
+                font-size: 48px;
             }
 
-            .mobile-nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(15, 23, 41, 0.98);
-                backdrop-filter: blur(10px);
-                border-bottom: 1px solid #1f2937;
-                padding: 20px;
-                flex-direction: column;
-                gap: 16px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            }
-
-            .mobile-nav-links.active {
-                display: flex;
-            }
-
-            .mobile-nav-links .nav-link {
-                width: 100%;
-                text-align: center;
-                padding: 12px;
-                border-radius: 8px;
-                background: rgba(59, 130, 246, 0.1);
-                border: 1px solid rgba(59, 130, 246, 0.2);
-            }
-
-            .mobile-nav-links .nav-link.cta {
-                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-                border: none;
-            }
-
-            .mobile-nav-links .nav-link::after {
-                display: none;
-            }
-
-            h1 {
-                font-size: 64px !important;
-                letter-spacing: -2.5px !important;
-                margin-bottom: 28px !important;
-            }
-
-            .hero {
-                padding: 120px 20px 60px 20px;
-            }
-
-            .hero-description, .hero p {
-                font-size: 22px !important;
-                max-width: 100% !important;
-                margin-bottom: 52px !important;
-            }
-
-            .waitlist-form > div {
-                flex-direction: column !important;
-                gap: 12px !important;
-                padding: 10px !important;
-            }
-
-            .waitlist-form input {
-                padding: 16px 20px !important;
-                font-size: 17px !important;
-            }
-
-            .waitlist-form button {
-                width: 100%;
-                padding: 16px !important;
-                font-size: 17px !important;
-            }
-
-            .nav-container {
-                padding: 16px 20px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .features {
-                padding: 60px 20px;
-            }
-
-            .section-heading {
-                font-size: 32px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-
-            .stat-number {
-                font-size: 36px;
-            }
-
-            .how-it-works {
-                padding: 60px 20px;
-            }
-
-            .steps-container {
-                grid-template-columns: 1fr;
-            }
-
-            .final-cta {
-                padding: 60px 20px;
-            }
-
-            .final-cta h2 {
-                font-size: 32px;
-            }
-
-            /* Modal Mobile */
-            .modal-content {
-                padding: 32px 24px;
-                max-height: 85vh;
-                border-radius: 20px;
-            }
-
-            .modal-icon {
-                font-size: 64px;
-            }
-
-            .modal-title {
-                font-size: 32px;
-            }
-
-            .modal-description {
-                font-size: 15px;
-            }
-
-            .modal-stats {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            .modal-stat {
-                padding: 16px;
-            }
-
-            .modal-stat-number {
-                font-size: 24px;
-            }
-
-            .modal-features {
-                padding: 20px;
-            }
-
-            .modal-features-title {
-                font-size: 14px;
-            }
-
-            .modal-feature-item {
-                padding: 12px;
-                gap: 12px;
-            }
-
-            .feature-check {
+            .hero-subtitle {
                 font-size: 18px;
             }
 
-            .feature-text {
-                font-size: 13px;
+            .section-heading {
+                font-size: 36px;
             }
 
-            .modal-timeline {
-                padding: 14px 16px;
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
 
-            .modal-buttons {
-                flex-direction: column;
+            .feature-row.reverse {
+                direction: ltr;
             }
 
-            .modal-button {
-                width: 100%;
-            }
-
-            .modal-close {
-                top: 12px;
-                right: 12px;
-                width: 36px;
-                height: 36px;
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 50px !important;
-                letter-spacing: -2px !important;
-            }
-
-            .hero p {
-                font-size: 19px !important;
-            }
-
-            .hero-badge {
-                font-size: 11px !important;
-                padding: 8px 14px !important;
-                gap: 6px !important;
-            }
-
-            .hero-badge span:first-child {
-                font-size: 13px !important;
-            }
-
-            .modal-title {
+            .feature-content h3 {
                 font-size: 28px;
             }
 
-            .modal-stat-number {
-                font-size: 22px;
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .hero {
+                padding: 140px 20px 80px;
             }
         }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
-    <!-- Success Modal - At the very top of body -->
-    <div id="successModal" class="modal-overlay">
-        <div class="modal-content">
-            <button type="button" class="modal-close" id="closeModalBtn">×</button>
-            
-            <div class="modal-icon">🎉</div>
-            
-            <h2 class="modal-title">You're on the Waitlist!</h2>
-            
-            <p class="modal-description">
-                Welcome to the FocusFlow family! You're joining thousands of students ready to transform their academic journey.
-            </p>
-            
-            <!-- Stats -->
-            <div class="modal-stats">
-                <div class="modal-stat">
-                    <div class="modal-stat-number">10k+</div>
-                    <div class="modal-stat-label">Students Waiting</div>
-                </div>
-                <div class="modal-stat">
-                    <div class="modal-stat-number">Q1 2026</div>
-                    <div class="modal-stat-label">Expected Launch</div>
-                </div>
-                <div class="modal-stat">
-                    <div class="modal-stat-number">50%</div>
-                    <div class="modal-stat-label">Launch Discount</div>
-                </div>
-            </div>
-            
-            <!-- What You Get -->
-            <div class="modal-features">
-                <div class="modal-features-title">🎁 What You'll Get as a Waitlist Member</div>
-                <div class="modal-feature-item">
-                    <div class="feature-check">✓</div>
-                    <div class="feature-text"><strong>First Access:</strong> Be among the first to download FocusFlow when we launch</div>
-                </div>
-                <div class="modal-feature-item">
-                    <div class="feature-check">✓</div>
-                    <div class="feature-text"><strong>Exclusive 50% Discount:</strong> Lock in launch pricing for your first year</div>
-                </div>
-                <div class="modal-feature-item">
-                    <div class="feature-check">✓</div>
-                    <div class="feature-text"><strong>Beta Access:</strong> Test features early and help shape the product</div>
-                </div>
-                <div class="modal-feature-item">
-                    <div class="feature-check">✓</div>
-                    <div class="feature-text"><strong>Premium Support:</strong> Priority customer support and feature requests</div>
-                </div>
-                <div class="modal-feature-item">
-                    <div class="feature-check">✓</div>
-                    <div class="feature-text"><strong>Study Resources:</strong> Free productivity guides and study tips sent to your inbox</div>
-                </div>
-            </div>
-            
-            <!-- Timeline -->
-            <div class="modal-timeline">
-                <div class="modal-timeline-title">📅 What Happens Next?</div>
-                <div class="modal-timeline-text">
-                    We'll send you updates as we get closer to launch. Expect your beta invite in the next 4-6 weeks. In the meantime, we'll share exclusive productivity tips and sneak peeks of new features!
-                </div>
-            </div>
-            
-            <!-- Buttons -->
-            <div class="modal-buttons">
-                <button type="button" class="modal-button modal-button-secondary" onclick="window.location.href='demo.html'">
-                    Explore Demo
-                </button>
-                <button type="button" class="modal-button" id="modalGotItBtn">
-                    Got it, thanks!
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Navigation -->
-    <nav>
+    <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">FocusFlow</div>
+            <div class="logo">FocusTwin AI</div>
             <div class="nav-links">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="updates.html" class="nav-link">Updates</a>
-                <a href="demo.html" class="nav-link cta">Try Demo</a>
-            </div>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleMobileMenu()">☰</button>
-            <div class="mobile-nav-links" id="mobileNavLinks">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="updates.html" class="nav-link">Updates</a>
-                <a href="demo.html" class="nav-link cta">Try Demo</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#" class="nav-link nav-cta">Try FocusTwin Free</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-badge" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(16, 185, 129, 0.15) 100%); border: 1px solid rgba(59, 130, 246, 0.4); padding: 10px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
-            <span style="font-size: 16px; animation: pulse 2s infinite;">🚀</span>
-            <span style="color: #60a5fa; text-transform: uppercase; letter-spacing: 1px;">LAUNCHING QUARTER 1 2026</span>
-            <span style="height: 20px; width: 1px; background: rgba(255, 255, 255, 0.2);"></span>
-            <span style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">Early Access Available</span>
-        </div>
-        <h1 style="font-size: 108px; font-weight: 900; line-height: 1.05; margin-bottom: 36px; letter-spacing: -3px; text-shadow: 0 6px 30px rgba(59, 130, 246, 0.3);">
-            Your <span style="display: inline-block; background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.4)) drop-shadow(0 0 50px rgba(16, 185, 129, 0.25));">GPA</span> just got<br>
-            <span class="gradient-text" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 50px rgba(59, 130, 246, 0.6)) drop-shadow(0 0 80px rgba(59, 130, 246, 0.4));">smarter</span><span style="color: #3b82f6; font-size: 1.1em; filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8));">.</span>
+        <h1 class="fade-in">
+            The AI that runs<br>
+            your <span class="highlight">school life</span>.
         </h1>
-        
-        <p style="font-size: 30px; color: #e5e7eb; margin-bottom: 72px; line-height: 1.5; max-width: 850px; margin-left: auto; margin-right: auto; font-weight: 400; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);">
-            The AI-powered student app that syncs with Canvas, breaks down assignments, blocks distractions, and helps you achieve better grades
+        <p class="hero-subtitle fade-in">
+            FocusTwin AI automatically organizes homework, tests, and study plans — no typing required.
         </p>
-
-        <form class="waitlist-form" id="waitlistForm" onsubmit="handleSubmit(event)" style="max-width: 680px; margin: 0 auto 40px auto;">
-            <div style="position: relative; display: flex; gap: 18px; background: linear-gradient(135deg, rgba(26, 35, 50, 0.95) 0%, rgba(15, 23, 41, 0.95) 100%); border: 2px solid; border-image: linear-gradient(135deg, #3b82f6 0%, #10b981 100%) 1; border-radius: 24px; padding: 16px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 40px rgba(59,130,246,0.25), 0 0 80px rgba(59,130,246,0.15), inset 0 2px 0 rgba(255,255,255,0.1), inset 0 -2px 0 rgba(59,130,246,0.2); backdrop-filter: blur(20px);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 16px 50px rgba(59,130,246,0.35), 0 0 120px rgba(59,130,246,0.25), inset 0 2px 0 rgba(255,255,255,0.15), inset 0 -2px 0 rgba(59,130,246,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 40px rgba(59,130,246,0.25), 0 0 80px rgba(59,130,246,0.15), inset 0 2px 0 rgba(255,255,255,0.1), inset 0 -2px 0 rgba(59,130,246,0.2)'">
-                <input 
-                    type="email" 
-                    id="emailInput" 
-                    placeholder="Enter your email"
-                    required
-                    style="flex: 1; background: rgba(10, 14, 39, 0.6); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 24px 32px; font-size: 20px; color: #ffffff; outline: none; transition: all 0.3s; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);" onfocus="this.style.background='rgba(10, 14, 39, 0.8)'; this.style.borderColor='rgba(59, 130, 246, 0.5)'; this.style.boxShadow='inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(59, 130, 246, 0.1)'" onblur="this.style.background='rgba(10, 14, 39, 0.6)'; this.style.borderColor='rgba(59, 130, 246, 0.2)'; this.style.boxShadow='inset 0 2px 4px rgba(0, 0, 0, 0.3)'"
-                >
-                <button type="submit" id="submitButton" style="position: relative; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%); color: white; border: none; padding: 24px 52px; border-radius: 16px; font-size: 20px; font-weight: 700; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 24px rgba(59,130,246,0.5), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.2); white-space: nowrap; overflow: hidden;" onmouseover="this.style.transform='translateY(-3px) scale(1.02)'; this.style.boxShadow='0 16px 40px rgba(59,130,246,0.6), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2)'; this.style.background='linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 8px 24px rgba(59,130,246,0.5), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(0,0,0,0.2)'; this.style.background='linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)'">
-                    <span style="position: relative; z-index: 2;">Join Waitlist</span>
-                    <span style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); transform: translateX(-100%); transition: transform 0.6s;"></span>
-                </button>
-            </div>
-        </form>
-        
-        <div id="formMessage" class="form-message hidden" style="max-width: 680px; margin: 0 auto 28px auto;"></div>
-        
-        <a href="demo.html" style="position: relative; display: inline-flex; align-items: center; gap: 14px; background: linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(16,185,129,0.15) 100%); border: 2px solid; border-image: linear-gradient(135deg, rgba(59,130,246,0.6) 0%, rgba(16,185,129,0.6) 100%) 1; color: #60a5fa; padding: 20px 40px; border-radius: 18px; font-size: 19px; font-weight: 600; text-decoration: none; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); margin-bottom: 36px; box-shadow: 0 6px 24px rgba(59,130,246,0.2), inset 0 1px 0 rgba(255,255,255,0.1); backdrop-filter: blur(10px); overflow: hidden;" onmouseover="this.style.background='linear-gradient(135deg, rgba(59,130,246,0.25) 0%, rgba(16,185,129,0.25) 100%)'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 36px rgba(59,130,246,0.3), inset 0 1px 0 rgba(255,255,255,0.15)'; this.querySelector('.demo-shine').style.transform='translateX(200%)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(16,185,129,0.15) 100%)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 24px rgba(59,130,246,0.2), inset 0 1px 0 rgba(255,255,255,0.1)'; this.querySelector('.demo-shine').style.transform='translateX(-100%)'">
-            <span style="font-size: 26px; filter: drop-shadow(0 2px 8px rgba(59,130,246,0.6));">👀</span>
-            <span style="background: linear-gradient(135deg, #60a5fa 0%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">Look at Demo</span>
-            <span style="font-size: 20px; transition: transform 0.3s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='translateX(0)'">→</span>
-            <span class="demo-shine" style="position: absolute; top: 0; left: 0; width: 30%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%); transform: translateX(-100%); transition: transform 0.6s;"></span>
-        </a>
-
-        <p style="font-size: 15px; color: #6b7280; margin-top: 36px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <span style="font-size: 18px;">🔒</span>
-            <span>We respect your privacy. No spam, ever.</span>
-        </p>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="section-title">Features</div>
-        <h2 class="section-heading">Everything you need to succeed</h2>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🤖</div>
-                <h3 class="feature-title">AI Task Breakdown</h3>
-                <p class="feature-description">
-                    Our AI analyzes your assignments and automatically breaks them down into manageable, bite-sized tasks. Get personalized time estimates based on your past performance, subject difficulty, and current workload. Never feel overwhelmed by a big project again.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3 class="feature-title">Smart Focus Mode</h3>
-                <p class="feature-description">
-                    One tap to block all distracting apps and enter deep work mode. Choose which apps to block (social media, games, etc.) and set your study duration. Our intelligent timer includes scheduled breaks to keep you fresh and productive throughout your session.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3 class="feature-title">Grade Tracker</h3>
-                <p class="feature-description">
-                    Track all your grades in one place with real-time GPA calculations. See exactly how each assignment impacts your overall grade with our "what-if" calculator. Get alerts when your grade drops and celebrate when you're on track for that A!
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📚</div>
-                <h3 class="feature-title">Canvas Integration</h3>
-                <p class="feature-description">
-                    Connect your Canvas LMS account in seconds and automatically sync all your courses, assignments, due dates, and grades. No more manual data entry. Updates happen in real-time so you never miss a deadline or grade update.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">⏰</div>
-                <h3 class="feature-title">Smart Scheduling</h3>
-                <p class="feature-description">
-                    Our AI learns your productivity patterns and automatically suggests the best times to study each subject. Morning person? Night owl? FocusFlow adapts to your natural rhythm and finds free time slots in your busy schedule.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
-                <h3 class="feature-title">Progress Analytics</h3>
-                <p class="feature-description">
-                    Beautiful visualizations show your study habits, time spent per subject, and productivity trends over time. Identify which subjects need more attention and see your improvement week over week. Data-driven insights to help you succeed.
-                </p>
-            </div>
+        <div class="cta-group fade-in">
+            <a href="#" class="btn btn-primary">
+                Try FocusTwin Free
+                <span>→</span>
+            </a>
+            <a href="#features" class="btn btn-secondary">
+                See How It Works
+            </a>
         </div>
-
-        <!-- App Screenshots Section -->
-        <div style="margin-top: 80px;">
-            <div style="text-align: center; margin-bottom: 48px;">
-                <h3 style="font-size: 32px; font-weight: 700; margin-bottom: 16px;">See It In Action</h3>
-                <p style="font-size: 18px; color: #6b7280;">Get a preview of the FocusFlow interface</p>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; max-width: 1000px; margin: 0 auto;">
-                <!-- Tasks Screenshot -->
-                <div style="background: linear-gradient(135deg, #1a2332, #0f1729); border: 1px solid #1f2937; border-radius: 24px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-                    <div style="width: 100%; aspect-ratio: 375/500; background: #0f1729; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 4px solid #1a2332;">
-                        <div style="padding: 24px; font-size: 12px;">
-                            <!-- Status Bar -->
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #1f2937;">
-                                <span style="font-weight: 600; font-size: 14px;">9:41</span>
-                                <span style="font-size: 14px;">📶 📡 🔋</span>
-                            </div>
-                            
-                            <!-- Header -->
-                            <div style="margin-bottom: 24px;">
-                                <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">Today's Tasks</div>
-                                <div style="font-size: 14px; color: #6b7280;">5 assignments • 3 due today</div>
-                            </div>
-                            
-                            <!-- Urgent Task -->
-                            <div style="background: #1a2332; border: 2px solid #ef4444; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(239,68,68,0.2);">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <div style="font-weight: 600; font-size: 14px;">📝 Chemistry Lab Report</div>
-                                    <span style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">URGENT</span>
-                                </div>
-                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">Due today at 11:59 PM<br>Worth 15% of final grade</div>
-                                <div style="height: 6px; background: #1f2937; border-radius: 3px; overflow: hidden;">
-                                    <div style="height: 100%; width: 60%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
-                                </div>
-                                <div style="font-size: 11px; color: #6b7280; margin-top: 6px;">60% Complete • 1.5 hrs remaining</div>
-                            </div>
-
-                            <!-- High Priority Task -->
-                            <div style="background: #1a2332; border: 1px solid #f59e0b; border-radius: 16px; padding: 16px; margin-bottom: 12px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <div style="font-weight: 600; font-size: 14px;">📐 Calculus Problem Set</div>
-                                    <span style="background: rgba(245,158,11,0.2); color: #f59e0b; padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">HIGH</span>
-                                </div>
-                                <div style="font-size: 12px; color: #6b7280;">Due tomorrow • Est. 1.5 hours</div>
-                            </div>
-
-                            <!-- Medium Priority Task -->
-                            <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 16px; padding: 16px; margin-bottom: 12px;">
-                                <div style="font-weight: 600; font-size: 14px; margin-bottom: 8px;">✍️ English Essay Draft</div>
-                                <div style="font-size: 12px; color: #6b7280;">Due Friday • Worth 20% of grade</div>
-                            </div>
-
-                            <!-- CTA Button -->
-                            <div style="text-align: center; margin-top: 20px;">
-                                <div style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(59,130,246,0.3);">
-                                    🎯 Start Focus Session
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: 24px;">
-                        <div style="font-weight: 600; font-size: 18px; margin-bottom: 8px;">Smart Task Management</div>
-                        <div style="font-size: 14px; color: #6b7280; line-height: 1.6;">AI-powered prioritization keeps you focused on what matters most</div>
-                    </div>
-                </div>
-
-                <!-- Grades Screenshot -->
-                <div style="background: linear-gradient(135deg, #1a2332, #0f1729); border: 1px solid #1f2937; border-radius: 24px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-                    <div style="width: 100%; aspect-ratio: 375/500; background: #0f1729; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 4px solid #1a2332;">
-                        <div style="padding: 24px; font-size: 12px;">
-                            <!-- Status Bar -->
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #1f2937;">
-                                <span style="font-weight: 600; font-size: 14px;">9:41</span>
-                                <span style="font-size: 14px;">📶 📡 🔋</span>
-                            </div>
-
-                            <!-- Header -->
-                            <div style="margin-bottom: 24px;">
-                                <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">My Grades</div>
-                                <div style="font-size: 14px; color: #6b7280;">Current GPA: 3.72</div>
-                            </div>
-
-                            <!-- Chemistry Grade -->
-                            <div style="background: #1a2332; border: 1px solid rgba(16,185,129,0.3); border-radius: 16px; padding: 16px; margin-bottom: 12px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                    <div style="font-weight: 600; font-size: 14px;">🧪 Chemistry 201</div>
-                                    <div style="font-size: 24px; font-weight: 700; color: #10b981;">A-</div>
-                                </div>
-                                <div style="height: 6px; background: #1f2937; border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
-                                    <div style="height: 100%; width: 91%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
-                                </div>
-                                <div style="font-size: 11px; color: #6b7280;">Current: 91.2%<br>Need 85% on final for A</div>
-                            </div>
-
-                            <!-- Calculus Grade -->
-                            <div style="background: #1a2332; border: 1px solid rgba(59,130,246,0.3); border-radius: 16px; padding: 16px; margin-bottom: 12px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                    <div style="font-weight: 600; font-size: 14px;">📐 Calculus II</div>
-                                    <div style="font-size: 24px; font-weight: 700; color: #3b82f6;">B+</div>
-                                </div>
-                                <div style="height: 6px; background: #1f2937; border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
-                                    <div style="height: 100%; width: 87%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
-                                </div>
-                                <div style="font-size: 11px; color: #6b7280;">Current: 87.5%<br>Need 92% on final for A-</div>
-                            </div>
-
-                            <!-- English Grade -->
-                            <div style="background: #1a2332; border: 1px solid rgba(16,185,129,0.3); border-radius: 16px; padding: 16px; margin-bottom: 16px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                    <div style="font-weight: 600; font-size: 14px;">📚 English Comp</div>
-                                    <div style="font-size: 24px; font-weight: 700; color: #10b981;">A</div>
-                                </div>
-                                <div style="height: 6px; background: #1f2937; border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
-                                    <div style="height: 100%; width: 94%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
-                                </div>
-                                <div style="font-size: 11px; color: #6b7280;">Current: 94.1%<br>On track for A</div>
-                            </div>
-
-                            <!-- GPA Stats -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                                <div style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 14px; text-align: center;">
-                                    <div style="font-size: 20px; font-weight: 700; color: #3b82f6; margin-bottom: 4px;">3.72</div>
-                                    <div style="font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Current GPA</div>
-                                </div>
-                                <div style="background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); border-radius: 12px; padding: 14px; text-align: center;">
-                                    <div style="font-size: 20px; font-weight: 700; color: #10b981; margin-bottom: 4px;">3.85</div>
-                                    <div style="font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Projected</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: 24px;">
-                        <div style="font-weight: 600; font-size: 18px; margin-bottom: 8px;">Real-Time Grade Tracking</div>
-                        <div style="font-size: 14px; color: #6b7280; line-height: 1.6;">Live updates and smart predictions for your academic success</div>
-                    </div>
-                </div>
-            </div>
+        <div class="trust-badge fade-in">
+            <span>🔒</span>
+            <span>Free forever. No credit card required.</span>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section id="features">
         <div class="section-title">Features</div>
-        <h2 class="section-heading">Everything you need to succeed</h2>
+        <h2 class="section-heading">Everything happens automatically</h2>
 
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🤖</div>
-                <h3 class="feature-title">AI Task Breakdown</h3>
-                <p class="feature-description">
-                    Our AI analyzes your assignments and automatically breaks them down into manageable, bite-sized tasks. Get personalized time estimates based on your past performance, subject difficulty, and current workload. Never feel overwhelmed by a big project again.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3 class="feature-title">Smart Focus Mode</h3>
-                <p class="feature-description">
-                    One tap to block all distracting apps and enter deep work mode. Choose which apps to block (social media, games, etc.) and set your study duration. Our intelligent timer includes scheduled breaks to keep you fresh and productive throughout your session.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3 class="feature-title">Grade Tracker</h3>
-                <p class="feature-description">
-                    Track all your grades in one place with real-time GPA calculations. See exactly how each assignment impacts your overall grade with our "what-if" calculator. Get alerts when your grade drops and celebrate when you're on track for that A!
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📚</div>
-                <h3 class="feature-title">Canvas Integration</h3>
-                <p class="feature-description">
-                    Connect your Canvas LMS account in seconds and automatically sync all your courses, assignments, due dates, and grades. No more manual data entry. Updates happen in real-time so you never miss a deadline or grade update.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">⏰</div>
-                <h3 class="feature-title">Smart Scheduling</h3>
-                <p class="feature-description">
-                    Our AI learns your productivity patterns and automatically suggests the best times to study each subject. Morning person? Night owl? FocusFlow adapts to your natural rhythm and finds free time slots in your busy schedule.
-                </p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
-                <h3 class="feature-title">Progress Analytics</h3>
-                <p class="feature-description">
-                    Beautiful visualizations show your study habits, time spent per subject, and productivity trends over time. Identify which subjects need more attention and see your improvement week over week. Data-driven insights to help you succeed.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stat">
-                <div class="stat-number">2.5hrs</div>
-                <div class="stat-label">Saved Per Week</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">92%</div>
-                <div class="stat-label">Task Completion</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">0.4</div>
-                <div class="stat-label">GPA Increase</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">10k+</div>
-                <div class="stat-label">Students Waiting</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why FocusFlow Section -->
-    <section style="padding: 80px 40px; max-width: 1200px; margin: 0 auto;">
-        <div style="text-align: center; margin-bottom: 60px;">
-            <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; margin-bottom: 16px; font-weight: 600;">Why Students Love Us</div>
-            <h2 style="font-size: 42px; font-weight: 700; letter-spacing: -0.5px;">Built for Real Student Challenges</h2>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px;">
-            <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 20px; padding: 32px;">
-                <div style="font-size: 40px; margin-bottom: 16px;">🎯</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Stop Feeling Overwhelmed</h3>
-                <p style="font-size: 15px; color: #6b7280; line-height: 1.7; margin-bottom: 16px;">
-                    Have 5 assignments due this week and don't know where to start? FocusFlow automatically prioritizes your tasks based on due dates, grade weight, and estimated time. AI breaks down complex projects into bite-sized steps so you always know your next move.
-                </p>
-                <div style="background: #0f1729; border-radius: 12px; padding: 16px; border-left: 3px solid #3b82f6;">
-                    <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">Real Student:</div>
-                    <div style="font-size: 14px; line-height: 1.6;">"Before FocusFlow, I'd stare at my to-do list for 30 minutes trying to decide what to work on. Now the app tells me exactly what needs attention first."</div>
-                    <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">- Sarah, Sophomore at UNC</div>
+        <div class="feature-showcase">
+            <!-- Feature 1: Screenshot to Homework -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <h3>Screenshot → Homework</h3>
+                    <p>Snap a photo of your syllabus, assignment sheet, or whiteboard. FocusTwin AI instantly extracts due dates, tasks, and requirements — turning photos into actionable homework items.</p>
+                    <ul class="feature-list">
+                        <li>AI vision recognizes handwriting and typed text</li>
+                        <li>Automatically creates tasks with due dates</li>
+                        <li>Works with syllabi, whiteboards, and assignment sheets</li>
+                        <li>No manual typing ever required</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="icon-placeholder">📸</div>
                 </div>
             </div>
 
-            <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 20px; padding: 32px;">
-                <div style="font-size: 40px; margin-bottom: 16px;">📱</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Actually Block Distractions</h3>
-                <p style="font-size: 15px; color: #6b7280; line-height: 1.7; margin-bottom: 16px;">
-                    Tired of "just checking" Instagram turning into an hour of scrolling? FocusFlow integrates with iOS Screen Time to physically block apps during study sessions. Not just a reminder - apps literally won't open. One tap starts a focus session, blocks your chosen apps, and starts the timer.
-                </p>
-                <div style="background: #0f1729; border-radius: 12px; padding: 16px; border-left: 3px solid #3b82f6;">
-                    <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">Real Student:</div>
-                    <div style="font-size: 14px; line-height: 1.6;">"I used to tell myself 'just 5 more minutes' on TikTok. Now my phone literally blocks it during study time. Game changer."</div>
-                    <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">- Marcus, Junior at Duke</div>
+            <!-- Feature 2: Auto-Sync -->
+            <div class="feature-row reverse">
+                <div class="feature-content">
+                    <h3>Auto-sync everything</h3>
+                    <p>Connect Google Classroom, Canvas, and your email once. FocusTwin AI continuously syncs assignments, grades, and deadlines in real-time — keeping everything up to date without lifting a finger.</p>
+                    <ul class="feature-list">
+                        <li>Google Classroom integration</li>
+                        <li>Canvas LMS support</li>
+                        <li>Email parsing for assignment updates</li>
+                        <li>Real-time grade sync</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="icon-placeholder">🔄</div>
                 </div>
             </div>
 
-            <div style="background: #1a2332; border: 1px solid #1f2937; border-radius: 20px; padding: 32px;">
-                <div style="font-size: 40px; margin-bottom: 16px;">📊</div>
-                <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 12px;">Know Where You Stand</h3>
-                <p style="font-size: 15px; color: #6b7280; line-height: 1.7; margin-bottom: 16px;">
-                    Stop refreshing Canvas hoping for grade updates. FocusFlow automatically syncs your grades and calculates your GPA in real-time. Use the what-if calculator to see exactly what score you need on your final to get the grade you want. No more grade anxiety or surprise final grades.
-                </p>
-                <div style="background: #0f1729; border-radius: 12px; padding: 16px; border-left: 3px solid #3b82f6;">
-                    <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">Real Student:</div>
-                    <div style="font-size: 14px; line-height: 1.6;">"I used to panic about grades. Now I can see exactly what I need on each assignment. It's like having a grade advisor in my pocket."</div>
-                    <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">- Emma, Freshman at Michigan</div>
+            <!-- Feature 3: Smart Study Plans -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <h3>Smart study plans</h3>
+                    <p>FocusTwin AI analyzes your workload, deadlines, and difficulty levels to create personalized study timelines. Get AI-generated study schedules that adapt to your pace and priorities.</p>
+                    <ul class="feature-list">
+                        <li>Automatic task breakdown for big projects</li>
+                        <li>Personalized study timelines</li>
+                        <li>Priority-based scheduling</li>
+                        <li>Adaptive to your learning pace</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="icon-placeholder">📅</div>
+                </div>
+            </div>
+
+            <!-- Feature 4: AI Tutor -->
+            <div class="feature-row reverse">
+                <div class="feature-content">
+                    <h3>AI Tutor on demand</h3>
+                    <p>Get instant homework help from your personal AI tutor. Premium gives you 30 minutes daily, Ultra gives unlimited access. Ask questions, get explanations, and work through problems step-by-step.</p>
+                    <ul class="feature-list">
+                        <li>Step-by-step problem solving</li>
+                        <li>Subject-specific explanations</li>
+                        <li>30 min/day (Premium) or unlimited (Ultra)</li>
+                        <li>Available 24/7</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="icon-placeholder">🤖</div>
+                </div>
+            </div>
+
+            <!-- Feature 5: Clean Dashboard -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <h3>Your academic command center</h3>
+                    <p>See all your assignments, grades, and schedule in one beautiful dashboard. Track what's due today, monitor your GPA, and stay on top of everything with zero effort.</p>
+                    <ul class="feature-list">
+                        <li>All assignments in one place</li>
+                        <li>Real-time grade tracking</li>
+                        <li>Integrated calendar view</li>
+                        <li>GPA calculator and predictions</li>
+                    </ul>
+                </div>
+                <div class="feature-visual">
+                    <div class="icon-placeholder">📊</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
-    <section class="how-it-works">
-        <div class="section-title">How It Works</div>
-        <h2 class="section-heading">Get started in minutes</h2>
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <div class="section-title">Pricing</div>
+        <h2 class="section-heading">Choose your plan</h2>
 
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3 class="step-title">Connect Canvas</h3>
-                <p class="step-description">
-                    Link your Canvas account to automatically import all your courses, assignments, and grades.
-                </p>
+        <div class="pricing-grid">
+            <!-- Free Plan -->
+            <div class="pricing-card">
+                <div class="pricing-name">Free</div>
+                <div class="pricing-price">$0</div>
+                <div class="pricing-period">Forever free</div>
+                <ul class="pricing-features">
+                    <li>Screenshot to homework conversion</li>
+                    <li>Google Classroom sync</li>
+                    <li>Basic task management</li>
+                    <li>Grade tracking</li>
+                    <li>Calendar view</li>
+                </ul>
+                <button class="pricing-cta">Get Started Free</button>
             </div>
 
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3 class="step-title">AI Creates Your Plan</h3>
-                <p class="step-description">
-                    Our AI analyzes your workload and creates a personalized study schedule based on your goals.
-                </p>
+            <!-- Premium Plan -->
+            <div class="pricing-card featured">
+                <div class="pricing-badge">Most Popular</div>
+                <div class="pricing-name">Premium</div>
+                <div class="pricing-price">$3.99<span>/mo</span></div>
+                <div class="pricing-period">or $29.99/year (save 37%)</div>
+                <ul class="pricing-features">
+                    <li>Everything in Free</li>
+                    <li>AI Tutor (30 min/day)</li>
+                    <li>Smart study plans</li>
+                    <li>Priority support</li>
+                    <li>Advanced analytics</li>
+                    <li>Canvas LMS integration</li>
+                </ul>
+                <button class="pricing-cta">Start Premium Trial</button>
             </div>
 
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3 class="step-title">Stay Focused & Succeed</h3>
-                <p class="step-description">
-                    Use focus mode to block distractions, track your progress, and watch your grades improve.
-                </p>
+            <!-- Ultra Plan -->
+            <div class="pricing-card">
+                <div class="pricing-name">Ultra</div>
+                <div class="pricing-price">$8.99<span>/mo</span></div>
+                <div class="pricing-period">or $90/year (save 17%)</div>
+                <ul class="pricing-features">
+                    <li>Everything in Premium</li>
+                    <li>Unlimited AI Tutor</li>
+                    <li>Advanced AI study plans</li>
+                    <li>Custom integrations</li>
+                    <li>Priority AI processing</li>
+                    <li>Family plan (up to 3 students)</li>
+                </ul>
+                <button class="pricing-cta">Start Ultra Trial</button>
             </div>
-        </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="final-cta">
-        <h2>Ready to transform your study habits?</h2>
-        <p>Join the waitlist and be the first to know when we launch.</p>
-        
-        <div class="waitlist-container">
-            <form id="waitlistForm2" class="waitlist-form">
-                <input 
-                    type="email" 
-                    id="emailInput2"
-                    class="email-input" 
-                    placeholder="Enter your email address"
-                    required
-                />
-                <button type="submit" class="submit-button" id="submitButton2">
-                    Join Waitlist
-                </button>
-            </form>
-            <div id="formMessage2" class="form-message hidden"></div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p class="footer-text">© 2025 FocusFlow. Built for students, by students.</p>
+        <div class="footer-content">
+            <div class="footer-logo">FocusTwin AI</div>
+            <div class="footer-tagline">The AI that runs your school life.</div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 FocusTwin AI. All rights reserved.
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Get modal elements
-        const modal = document.getElementById('successModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const modalGotItBtn = document.getElementById('modalGotItBtn');
-        
-        // Show modal function
-        function showSuccessModal() {
-            console.log('SHOWING MODAL');
-            modal.classList.add('visible');
-            document.body.classList.add('modal-open');
-        }
-        
-        // Hide modal function
-        function hideSuccessModal() {
-            console.log('HIDING MODAL');
-            modal.classList.remove('visible');
-            document.body.classList.remove('modal-open');
-        }
-        
-        // Close modal button click
-        closeModalBtn.addEventListener('click', hideSuccessModal);
-        modalGotItBtn.addEventListener('click', hideSuccessModal);
-        
-        // Click outside modal to close
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                hideSuccessModal();
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
         });
-        
-        // Email validation
-        function isValidEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-        
-        // Show error message
-        function showError(messageDiv, text) {
-            messageDiv.textContent = text;
-            messageDiv.className = 'form-message error';
-            setTimeout(() => {
-                messageDiv.className = 'form-message hidden';
-            }, 5000);
-        }
-        
-        // Handle form submission
-        async function handleSubmit(e) {
-            e.preventDefault();
-            
-            const formId = e.target.id;
-            const emailInput = document.getElementById(formId === 'waitlistForm' ? 'emailInput' : 'emailInput2');
-            const submitButton = document.getElementById(formId === 'waitlistForm' ? 'submitButton' : 'submitButton2');
-            const messageDiv = document.getElementById(formId === 'waitlistForm' ? 'formMessage' : 'formMessage2');
-            
-            const email = emailInput.value.trim();
-            
-            console.log('Form submitted:', email);
-            
-            // Validate email
-            if (!email) {
-                showError(messageDiv, 'Please enter your email address');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showError(messageDiv, 'Please enter a valid email address');
-                return;
-            }
-            
-            // Disable button
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<span class="spinner"></span> Joining...';
-            
-            try {
-                console.log('Sending to SheetDB...');
-                
-                const response = await fetch('https://sheetdb.io/api/v1/cuckh3xzos8yq', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        data: {
-                            email: email,
-                            timestamp: new Date().toISOString(),
-                            source: 'landing_page'
-                        }
-                    })
-                });
-                
-                console.log('Response status:', response.status);
-                
-                if (response.ok || response.status === 201) {
-                    console.log('SUCCESS - Showing modal now');
-                    
-                    // Clear form
-                    emailInput.value = '';
-                    
-                    // Hide any error messages
-                    messageDiv.className = 'form-message hidden';
-                    
-                    // Show success modal
-                    showSuccessModal();
-                } else {
-                    const data = await response.json();
-                    console.error('API error:', data);
-                    showError(messageDiv, 'Something went wrong. Please try again.');
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-                
-            } catch (error) {
-                console.error('Submit error:', error);
-                showError(messageDiv, 'Network error. Please check your connection.');
-            } finally {
-                // Re-enable button
-                submitButton.disabled = false;
-                submitButton.textContent = 'Join Waitlist';
-            }
-        }
-        
-        // Add submit listeners to both forms
-        document.getElementById('waitlistForm').addEventListener('submit', handleSubmit);
-        document.getElementById('waitlistForm2').addEventListener('submit', handleSubmit);
-        
-        // Test modal function (for debugging)
-        window.testModal = function() {
-            console.log('Testing modal...');
-            showSuccessModal();
-        };
-        
-        console.log('Script loaded successfully');
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const mobileNav = document.getElementById('mobileNavLinks');
-            mobileNav.classList.toggle('active');
-        }
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.mobile-nav-links .nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('mobileNavLinks').classList.remove('active');
             });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature rows and pricing cards
+        document.querySelectorAll('.feature-row, .pricing-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
         });
     </script>
 </body>
