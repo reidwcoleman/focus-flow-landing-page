@@ -266,6 +266,92 @@
             z-index: 1;
         }
 
+        /* Hero Email Form */
+        .hero-email-form {
+            max-width: 540px;
+            margin: 0 auto 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .email-input-group {
+            display: flex;
+            gap: 12px;
+            background: rgba(59, 130, 246, 0.08);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+        }
+
+        .email-input-group:focus-within {
+            border-color: var(--primary-blue);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .hero-email-input {
+            flex: 1;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 17px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .hero-email-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .hero-email-submit {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 4px 12px rgba(59, 130, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .hero-email-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .hero-email-submit:hover::before {
+            left: 100%;
+        }
+
+        .hero-email-submit:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 8px 20px rgba(59, 130, 246, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-email-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Section Styles */
         section {
             padding: 120px 40px;
@@ -1597,6 +1683,20 @@
             .success-step-content p {
                 font-size: 12px;
             }
+
+            .hero-email-form {
+                margin-bottom: 48px;
+            }
+
+            .email-input-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero-email-submit {
+                width: 100%;
+                padding: 16px;
+            }
         }
 
         /* Additional mobile styles for "What is FocusFlow" section */
@@ -1770,7 +1870,6 @@
             <div class="nav-links">
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#pricing" class="nav-link">Pricing</a>
-                <a href="#" class="nav-link nav-cta open-waitlist">Join Waitlist</a>
             </div>
         </div>
     </nav>
@@ -1784,15 +1883,23 @@
         <p class="hero-subtitle fade-in">
             FocusFlow automatically organizes homework, tests, and study plans — no typing required.
         </p>
-        <div class="cta-group fade-in">
-            <a href="#" class="btn btn-primary open-waitlist">
-                Join Waitlist
-                <span>→</span>
-            </a>
-            <a href="#features" class="btn btn-secondary">
-                See How It Works
-            </a>
-        </div>
+
+        <!-- Hero Email Form -->
+        <form class="hero-email-form fade-in" id="heroEmailForm">
+            <div class="email-input-group">
+                <input
+                    type="email"
+                    id="heroEmail"
+                    class="hero-email-input"
+                    placeholder="Enter your email to join the waitlist"
+                    required
+                />
+                <button type="submit" class="hero-email-submit" id="heroSubmitBtn">
+                    Join Waitlist →
+                </button>
+            </div>
+        </form>
+
         <div class="trust-badge fade-in">
             <span>🔒</span>
             <span>Free forever. No credit card required.</span>
@@ -2078,15 +2185,11 @@
                 <h3 style="font-size: 32px; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, var(--primary-blue-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                     Launching Q1 2026
                 </h3>
-                <p style="font-size: 20px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 32px;">
-                    We're building something special. Join the waitlist now to get <strong style="color: var(--primary-blue-light);">early access</strong>,
+                <p style="font-size: 20px; color: var(--text-secondary); line-height: 1.7;">
+                    We're building something special. Scroll up to join the waitlist and get <strong style="color: var(--primary-blue-light);">early access</strong>,
                     <strong style="color: var(--primary-blue-light);">exclusive updates</strong>, and <strong style="color: var(--primary-blue-light);">founding member pricing</strong>
                     when we launch in early 2026.
                 </p>
-                <a href="#" class="btn btn-primary open-waitlist" style="display: inline-flex;">
-                    Secure Your Spot
-                    <span>→</span>
-                </a>
             </div>
         </div>
     </section>
@@ -2109,7 +2212,6 @@
                     <li>Grade tracking</li>
                     <li>Calendar view</li>
                 </ul>
-                <button class="pricing-cta open-waitlist">Join Waitlist</button>
             </div>
 
             <!-- Personal Plan -->
@@ -2125,7 +2227,6 @@
                     <li>Advanced analytics</li>
                     <li>Canvas LMS integration</li>
                 </ul>
-                <button class="pricing-cta open-waitlist">Join Waitlist</button>
             </div>
 
             <!-- Family Plan -->
@@ -2142,7 +2243,6 @@
                     <li>Shared calendar & tasks</li>
                     <li>Parent progress reports</li>
                 </ul>
-                <button class="pricing-cta open-waitlist">Join Waitlist</button>
             </div>
 
         </div>
@@ -2164,86 +2264,56 @@
         </div>
     </footer>
 
-    <!-- Waitlist Modal -->
-    <div class="modal-overlay" id="waitlistModal">
+    <!-- Success Confirmation Modal -->
+    <div class="modal-overlay" id="successModal">
         <div class="modal-content">
             <button class="modal-close" id="closeModal">×</button>
+            <div class="success-checkmark show" id="successCheckmark"></div>
             <div class="modal-header">
-                <h2 class="modal-title">Join the Waitlist</h2>
-                <p class="modal-subtitle">Be the first to know when FocusFlow launches. Get early access and exclusive updates.</p>
+                <h2 class="modal-title">You're on the list!</h2>
+                <p class="modal-subtitle">🎉 Welcome to the FocusFlow waitlist. Here's what happens next:</p>
             </div>
-            <form class="waitlist-form" id="waitlistForm">
-                <div class="form-group">
-                    <label class="form-label" for="name">Full Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        class="form-input"
-                        placeholder="Enter your name"
-                        required
-                    />
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="email">Email Address</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        class="form-input"
-                        placeholder="you@example.com"
-                        required
-                    />
-                </div>
-                <div class="success-checkmark" id="successCheckmark"></div>
-                <button type="submit" class="form-submit" id="submitBtn">
-                    Join Waitlist
-                </button>
-                <div class="form-message" id="formMessage"></div>
 
-                <!-- Success Info Section -->
-                <div class="success-info" id="successInfo">
-                    <div class="success-info-title">What Happens Next?</div>
-
-                    <div class="success-step">
-                        <div class="success-step-icon">📧</div>
-                        <div class="success-step-content">
-                            <h4>Confirmation Email</h4>
-                            <p>Check your inbox for a welcome email with your waitlist position.</p>
-                        </div>
-                    </div>
-
-                    <div class="success-step">
-                        <div class="success-step-icon">🔔</div>
-                        <div class="success-step-content">
-                            <h4>Monthly Updates</h4>
-                            <p>Get exclusive behind-the-scenes updates on our development progress.</p>
-                        </div>
-                    </div>
-
-                    <div class="success-step">
-                        <div class="success-step-icon">⚡</div>
-                        <div class="success-step-content">
-                            <h4>Early Access Invitation</h4>
-                            <p>Be first to try FocusFlow when we launch our beta in Q1 2026.</p>
-                        </div>
-                    </div>
-
-                    <div class="success-step">
-                        <div class="success-step-icon">💰</div>
-                        <div class="success-step-content">
-                            <h4>Founding Member Pricing</h4>
-                            <p>Lock in exclusive lifetime discounts reserved for early supporters.</p>
-                        </div>
-                    </div>
-
-                    <div class="success-bonus">
-                        <div class="success-bonus-icon">🎁</div>
-                        <div class="success-bonus-text">Special Bonus</div>
-                        <div class="success-bonus-subtext">Waitlist members get 3 months free when we launch!</div>
+            <!-- Success Info Section -->
+            <div class="success-info show" id="successInfo">
+                <div class="success-step">
+                    <div class="success-step-icon">📧</div>
+                    <div class="success-step-content">
+                        <h4>Confirmation Email</h4>
+                        <p>Check your inbox for a welcome email with your waitlist position.</p>
                     </div>
                 </div>
-            </form>
+
+                <div class="success-step">
+                    <div class="success-step-icon">🔔</div>
+                    <div class="success-step-content">
+                        <h4>Monthly Updates</h4>
+                        <p>Get exclusive behind-the-scenes updates on our development progress.</p>
+                    </div>
+                </div>
+
+                <div class="success-step">
+                    <div class="success-step-icon">⚡</div>
+                    <div class="success-step-content">
+                        <h4>Early Access Invitation</h4>
+                        <p>Be first to try FocusFlow when we launch our beta in Q1 2026.</p>
+                    </div>
+                </div>
+
+                <div class="success-step">
+                    <div class="success-step-icon">💰</div>
+                    <div class="success-step-content">
+                        <h4>Founding Member Pricing</h4>
+                        <p>Lock in exclusive lifetime discounts reserved for early supporters.</p>
+                    </div>
+                </div>
+
+                <div class="success-bonus">
+                    <div class="success-bonus-icon">🎁</div>
+                    <div class="success-bonus-text">Special Bonus</div>
+                    <div class="success-bonus-subtext">Waitlist members get 3 months free when we launch!</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2299,21 +2369,11 @@
             observer.observe(el);
         });
 
-        // Waitlist Modal Functionality
-        const modal = document.getElementById('waitlistModal');
+        // Success Modal Functionality
+        const modal = document.getElementById('successModal');
         const closeModal = document.getElementById('closeModal');
-        const waitlistForm = document.getElementById('waitlistForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const formMessage = document.getElementById('formMessage');
-
-        // Open modal
-        document.querySelectorAll('.open-waitlist').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
+        const heroEmailForm = document.getElementById('heroEmailForm');
+        const heroSubmitBtn = document.getElementById('heroSubmitBtn');
 
         // Close modal
         closeModal.addEventListener('click', () => {
@@ -2337,19 +2397,18 @@
             }
         });
 
-        // Form submission
-        waitlistForm.addEventListener('submit', async (e) => {
+        // Hero Email Form Submission
+        heroEmailForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('heroEmail').value;
 
             // Disable submit button
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Joining...';
+            heroSubmitBtn.disabled = true;
+            heroSubmitBtn.textContent = 'Joining...';
 
             try {
-                // Sheet.db API endpoint - configured and ready!
+                // Sheet.db API endpoint
                 const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/cuckh3xzos8yq';
 
                 let success = false;
@@ -2362,10 +2421,9 @@
                         },
                         body: JSON.stringify({
                             data: {
-                                name: name,
                                 email: email,
                                 timestamp: new Date().toISOString(),
-                                source: 'Landing Page'
+                                source: 'Landing Page Hero'
                             }
                         })
                     });
@@ -2373,81 +2431,63 @@
                     if (response.ok) {
                         success = true;
                     } else {
-                        console.warn('Sheet.db not configured yet. Data:', { name, email });
-                        // Still show success to user even if Sheet.db isn't set up yet
-                        success = true;
+                        console.warn('Sheet.db response not OK. Data:', { email });
+                        success = true; // Still show success
                     }
                 } catch (apiError) {
-                    console.warn('Sheet.db API call failed (this is expected if not configured yet):', apiError);
-                    console.log('Submitted data (not saved):', { name, email });
-                    // Still show success to user - they don't need to know about the backend setup
-                    success = true;
+                    console.warn('Sheet.db API call failed:', apiError);
+                    console.log('Submitted email (not saved):', email);
+                    success = true; // Still show success
                 }
 
                 if (!success) {
                     throw new Error('Failed to submit');
                 }
 
-                // Create confetti explosion!
+                // MASSIVE CONFETTI EXPLOSION!
                 createConfetti();
 
-                // Show success checkmark
-                const successCheckmark = document.getElementById('successCheckmark');
-                const successInfo = document.getElementById('successInfo');
-                successCheckmark.classList.add('show');
-                submitBtn.style.display = 'none';
-
-                // Show success message
-                formMessage.className = 'form-message success';
-                formMessage.textContent = '🎉 You\'re on the list! Here\'s what happens next:';
-
-                // Show success info after a short delay
-                setTimeout(() => {
-                    successInfo.classList.add('show');
-                }, 800);
+                // Show success modal
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
 
                 // Reset form
-                waitlistForm.reset();
-
-                // NO AUTO-CLOSE - User can close manually
-                // Modal stays open until user closes it
+                heroEmailForm.reset();
 
             } catch (error) {
                 console.error('Waitlist submission error:', error);
-                // Show error message
-                formMessage.className = 'form-message error';
-                formMessage.textContent = '❌ Something went wrong. Please try again.';
+                alert('❌ Something went wrong. Please try again.');
             } finally {
                 // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Join Waitlist';
+                heroSubmitBtn.disabled = false;
+                heroSubmitBtn.textContent = 'Join Waitlist →';
             }
         });
 
-        // Confetti creation function - ABSOLUTELY INSANE VERSION!
+        // Confetti creation function - ABSOLUTELY MASSIVE VERSION!
         function createConfetti() {
-            const colors = ['#3b82f6', '#60a5fa', '#10b981', '#34d399', '#8b5cf6', '#a78bfa', '#ec4899', '#f59e0b', '#f472b6', '#facc15'];
+            const colors = ['#3b82f6', '#60a5fa', '#10b981', '#34d399', '#8b5cf6', '#a78bfa', '#ec4899', '#f59e0b', '#f472b6', '#facc15', '#fb923c', '#fbbf24'];
             const shapes = ['square', 'circle', 'rectangle', 'star'];
             const sizes = ['small', 'large', ''];
             const animations = ['confetti-fall', 'confetti-fall-swing', 'confetti-fall-zigzag', 'confetti-fall-spiral'];
 
-            // Create confetti continuously for 10 seconds!
-            const duration = 10000; // 10 seconds
-            const interval = 50; // Create new batch every 50ms (increased frequency!)
-            const piecesPerBurst = 25; // 25 pieces per burst (2.5x more!)
+            // MASSIVE CONFETTI - 12 seconds of pure chaos!
+            const duration = 12000; // 12 seconds
+            const interval = 30; // Create new batch every 30ms (SUPER FAST!)
+            const piecesPerBurst = 50; // 50 pieces per burst (DOUBLE!)
             let elapsed = 0;
 
             const confettiInterval = setInterval(() => {
-                // Create a burst of confetti
+                // Create a MASSIVE burst of confetti
                 for (let i = 0; i < piecesPerBurst; i++) {
                     const confetti = document.createElement('div');
 
-                    // Random shape
+                    // Random shape with more variety
                     const shape = shapes[Math.floor(Math.random() * shapes.length)];
                     const size = sizes[Math.floor(Math.random() * sizes.length)];
                     confetti.className = `confetti ${shape} ${size}`.trim();
 
-                    // Random color
+                    // Random color from expanded palette
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     if (shape === 'star') {
                         confetti.style.borderBottomColor = color;
@@ -2455,14 +2495,14 @@
                         confetti.style.backgroundColor = color;
                     }
 
-                    // Position across entire viewport width
-                    confetti.style.left = Math.random() * 100 + 'vw';
+                    // Position across entire viewport width with some variation
+                    confetti.style.left = (Math.random() * 100) + 'vw';
                     confetti.style.top = '-30px';
 
                     // Random animation type with varied durations
                     const animation = animations[Math.floor(Math.random() * animations.length)];
                     const animDuration = Math.random() * 3 + 4; // 4-7 seconds
-                    const delay = Math.random() * 0.3; // 0-0.3s delay
+                    const delay = Math.random() * 0.4; // 0-0.4s delay for more variation
                     confetti.style.animation = `${animation} ${animDuration}s linear ${delay}s forwards`;
 
                     // Add to body for full-page effect
