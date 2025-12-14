@@ -1437,26 +1437,59 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            .nav-container {
+                padding: 16px 24px;
+            }
+
             .nav-links {
                 display: none;
             }
 
+            .logo {
+                font-size: 20px;
+            }
+
+            .hero {
+                padding: 140px 24px 80px;
+            }
+
             .hero h1 {
-                font-size: 56px;
+                font-size: 52px;
                 letter-spacing: -2px;
+                line-height: 1.1;
             }
 
             .hero-subtitle {
                 font-size: 18px;
+                line-height: 1.6;
+                margin-bottom: 36px;
+            }
+
+            .hero::before {
+                width: 600px;
+                height: 600px;
+            }
+
+            section {
+                padding: 80px 24px;
+            }
+
+            .section-title {
+                font-size: 12px;
             }
 
             .section-heading {
                 font-size: 36px;
+                margin-bottom: 48px;
             }
 
             .feature-row {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 48px;
             }
 
             .feature-row.reverse {
@@ -1465,27 +1498,23 @@
 
             .feature-content h3 {
                 font-size: 28px;
+                margin-bottom: 16px;
             }
 
-            .cta-group {
-                flex-direction: column;
+            .feature-content p {
+                font-size: 16px;
             }
 
-            .btn {
-                width: 100%;
-                justify-content: center;
+            .feature-list li {
+                font-size: 15px;
             }
 
-            .pricing-grid {
-                grid-template-columns: 1fr;
+            .feature-visual {
+                padding: 32px 24px;
             }
 
-            section {
-                padding: 80px 20px;
-            }
-
-            .hero {
-                padding: 140px 20px 80px;
+            .feature-showcase {
+                gap: 64px;
             }
 
             .mockup-phone {
@@ -1497,8 +1526,42 @@
                 min-height: 360px;
             }
 
-            .feature-showcase {
-                gap: 80px;
+            .cta-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 32px;
+                font-size: 16px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .pricing-card {
+                padding: 32px 24px;
+            }
+
+            .pricing-name {
+                font-size: 24px;
+            }
+
+            .pricing-price {
+                font-size: 42px;
+            }
+
+            .pricing-features li {
+                font-size: 14px;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 20px;
             }
 
             .modal-content {
@@ -1536,6 +1599,37 @@
             }
         }
 
+        /* Additional mobile styles for "What is FocusFlow" section */
+        @media (max-width: 768px) {
+            section[style*="background: linear-gradient(180deg"] {
+                padding: 80px 24px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] p {
+                font-size: 18px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] h3 {
+                font-size: 18px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] div[style*="grid-template-columns"] {
+                gap: 20px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] div[style*="padding: 48px"] {
+                padding: 32px 24px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] div[style*="font-size: 32px"] {
+                font-size: 24px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] div[style*="font-size: 20px"] {
+                font-size: 16px !important;
+            }
+        }
+
         @media (max-width: 480px) {
             .hero h1 {
                 font-size: 42px;
@@ -1549,8 +1643,44 @@
                 padding: 120px 16px 60px;
             }
 
+            section {
+                padding: 60px 20px;
+            }
+
             .section-heading {
                 font-size: 28px;
+            }
+
+            .feature-content h3 {
+                font-size: 24px;
+            }
+
+            .feature-content p {
+                font-size: 15px;
+            }
+
+            .feature-visual {
+                padding: 24px 16px;
+            }
+
+            .mockup-phone {
+                max-width: 280px;
+            }
+
+            .mockup-content {
+                min-height: 320px;
+            }
+
+            .pricing-card {
+                padding: 24px 20px;
+            }
+
+            .pricing-name {
+                font-size: 22px;
+            }
+
+            .pricing-price {
+                font-size: 38px;
             }
 
             .modal-content {
@@ -1562,6 +1692,52 @@
                 width: 32px;
                 height: 32px;
                 font-size: 18px;
+            }
+
+            /* What is FocusFlow section - smaller screens */
+            section[style*="background: linear-gradient(180deg"] {
+                padding: 60px 20px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] p {
+                font-size: 16px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] div[style*="font-size: 40px"] {
+                font-size: 32px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] div[style*="font-size: 48px"] {
+                font-size: 36px !important;
+            }
+
+            section[style*="background: linear-gradient(180deg"] div[style*="padding: 32px"] {
+                padding: 24px 20px !important;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn, .pricing-cta, .form-submit {
+                min-height: 48px;
+                padding: 16px 32px;
+            }
+
+            .nav-link, .footer-link {
+                padding: 12px 8px;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+            }
+
+            .form-input {
+                min-height: 48px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .modal-close {
+                min-width: 44px;
+                min-height: 44px;
             }
         }
 
@@ -2257,8 +2433,8 @@
 
             // Create confetti continuously for 10 seconds!
             const duration = 10000; // 10 seconds
-            const interval = 80; // Create new batch every 80ms
-            const piecesPerBurst = 10; // 10 pieces per burst
+            const interval = 50; // Create new batch every 50ms (increased frequency!)
+            const piecesPerBurst = 25; // 25 pieces per burst (2.5x more!)
             let elapsed = 0;
 
             const confettiInterval = setInterval(() => {
