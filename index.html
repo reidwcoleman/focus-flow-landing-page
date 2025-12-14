@@ -484,56 +484,66 @@
             margin: 40px 0;
         }
 
-        /* Screenshot Mockups */
-        .mockup-phone {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border-radius: 42px;
-            padding: 16px;
+        /* Screenshot Mockups - MacBook Style */
+        .mockup-macbook {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 12px;
+            padding: 8px;
             box-shadow:
-                0 30px 90px rgba(0, 0, 0, 0.7),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            max-width: 340px;
+                0 40px 120px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            max-width: 100%;
             margin: 0 auto;
             position: relative;
         }
 
-        .mockup-phone::before {
+        .mockup-macbook::after {
             content: '';
             position: absolute;
-            top: 20px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
-            height: 28px;
+            width: 60%;
+            height: 12px;
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border-radius: 0 0 20px 20px;
-            z-index: 10;
-        }
-
-        .mockup-phone::after {
-            content: '';
-            position: absolute;
-            top: 28px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 6px;
-            background: #1f2937;
-            border-radius: 3px;
-            z-index: 11;
+            border-radius: 0 0 8px 8px;
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .mockup-screen {
             background: linear-gradient(135deg, #0f1729 0%, #1a2332 100%);
-            border-radius: 32px;
+            border-radius: 8px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.1);
+            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.15);
+            aspect-ratio: 16 / 10;
         }
 
+        .mockup-window-controls {
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .mockup-dot.red { background: #ff5f57; }
+        .mockup-dot.yellow { background: #ffbd2e; }
+        .mockup-dot.green { background: #28c840; }
+
         .mockup-header {
-            padding: 52px 20px 16px;
+            padding: 20px 24px 16px;
             border-bottom: 1px solid rgba(59, 130, 246, 0.08);
             display: flex;
             justify-content: space-between;
@@ -541,22 +551,29 @@
         }
 
         .mockup-time {
-            font-size: 15px;
-            font-weight: 600;
-            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
             letter-spacing: 0.3px;
         }
 
         .mockup-icons {
-            font-size: 14px;
-            color: #fff;
+            font-size: 12px;
+            color: var(--text-muted);
             display: flex;
-            gap: 4px;
+            gap: 12px;
         }
 
         .mockup-content {
-            padding: 24px 20px;
-            min-height: 420px;
+            padding: 24px;
+            min-height: 320px;
+            position: relative;
+        }
+
+        .blur-overlay {
+            filter: blur(8px);
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         .mockup-title {
@@ -1603,13 +1620,13 @@
                 gap: 64px;
             }
 
-            .mockup-phone {
-                max-width: 300px;
+            .mockup-macbook {
+                max-width: 100%;
             }
 
             .mockup-content {
                 padding: 20px 16px;
-                min-height: 360px;
+                min-height: 280px;
             }
 
             .cta-group {
@@ -1763,12 +1780,12 @@
                 padding: 24px 16px;
             }
 
-            .mockup-phone {
-                max-width: 280px;
+            .mockup-macbook {
+                max-width: 100%;
             }
 
             .mockup-content {
-                min-height: 320px;
+                min-height: 240px;
             }
 
             .pricing-card {
@@ -1953,34 +1970,40 @@
                     </ul>
                 </div>
                 <div class="feature-visual">
-                    <div class="mockup-phone">
+                    <div class="mockup-macbook">
                         <div class="mockup-screen">
+                            <div class="mockup-window-controls">
+                                <span class="mockup-dot red"></span>
+                                <span class="mockup-dot yellow"></span>
+                                <span class="mockup-dot green"></span>
+                            </div>
                             <div class="mockup-header">
-                                <div class="mockup-time">9:41</div>
-                                <div class="mockup-icons">📶 📡 🔋</div>
+                                <div class="mockup-title">Integrations</div>
+                                <div class="mockup-icons">⚙️ 🔔</div>
                             </div>
                             <div class="mockup-content">
-                                <div class="mockup-title">Integrations</div>
-                                <div class="mockup-subtitle">All your tools in one place</div>
-                                <div class="sync-item">
-                                    <div class="sync-icon">🎓</div>
-                                    <div class="sync-info">
-                                        <div class="sync-name">Google Classroom</div>
-                                        <div class="sync-status">✓ Synced 2 min ago</div>
+                                <div class="blur-overlay">
+                                    <div class="mockup-subtitle">All your tools in one place</div>
+                                    <div class="sync-item">
+                                        <div class="sync-icon">🎓</div>
+                                        <div class="sync-info">
+                                            <div class="sync-name">Google Classroom</div>
+                                            <div class="sync-status">✓ Synced 2 min ago</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="sync-item">
-                                    <div class="sync-icon">📚</div>
-                                    <div class="sync-info">
-                                        <div class="sync-name">Canvas LMS</div>
-                                        <div class="sync-status">✓ Synced 5 min ago</div>
+                                    <div class="sync-item">
+                                        <div class="sync-icon">📚</div>
+                                        <div class="sync-info">
+                                            <div class="sync-name">Canvas LMS</div>
+                                            <div class="sync-status">✓ Synced 5 min ago</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="sync-item">
-                                    <div class="sync-icon">📧</div>
-                                    <div class="sync-info">
-                                        <div class="sync-name">Email</div>
-                                        <div class="sync-status">✓ Synced just now</div>
+                                    <div class="sync-item">
+                                        <div class="sync-icon">📧</div>
+                                        <div class="sync-info">
+                                            <div class="sync-name">Email</div>
+                                            <div class="sync-status">✓ Synced just now</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2002,34 +2025,42 @@
                     </ul>
                 </div>
                 <div class="feature-visual">
-                    <div class="mockup-phone">
+                    <div class="mockup-macbook">
                         <div class="mockup-screen">
+                            <div class="mockup-window-controls">
+                                <span class="mockup-dot red"></span>
+                                <span class="mockup-dot yellow"></span>
+                                <span class="mockup-dot green"></span>
+                            </div>
                             <div class="mockup-header">
-                                <div class="mockup-time">9:41</div>
-                                <div class="mockup-icons">📶 📡 🔋</div>
+                                <div class="mockup-title">Today's Plan</div>
+                                <div class="mockup-icons">📅 ⏰</div>
                             </div>
                             <div class="mockup-content">
-                                <div class="mockup-title">Today's Plan</div>
-                                <div class="mockup-subtitle">Friday, Dec 13 • 4 tasks</div>
-                                <div class="timeline-item">
-                                    <div class="timeline-time">3:00 PM</div>
-                                    <div class="timeline-task">Math - Chapter 5 Problems</div>
-                                    <div class="timeline-duration">45 min</div>
+                                <div style="margin-bottom: 16px;">
+                                    <div class="mockup-subtitle">Friday, Dec 13 • 4 tasks</div>
                                 </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-time">4:00 PM</div>
-                                    <div class="timeline-task">Chemistry Lab Report</div>
-                                    <div class="timeline-duration">1.5 hours</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-time">6:00 PM</div>
-                                    <div class="timeline-task">English Essay Draft</div>
-                                    <div class="timeline-duration">1 hour</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-time">7:30 PM</div>
-                                    <div class="timeline-task">History Reading</div>
-                                    <div class="timeline-duration">30 min</div>
+                                <div class="blur-overlay">
+                                    <div class="timeline-item">
+                                        <div class="timeline-time">3:00 PM</div>
+                                        <div class="timeline-task">Math - Chapter 5 Problems</div>
+                                        <div class="timeline-duration">45 min</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-time">4:00 PM</div>
+                                        <div class="timeline-task">Chemistry Lab Report</div>
+                                        <div class="timeline-duration">1.5 hours</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-time">6:00 PM</div>
+                                        <div class="timeline-task">English Essay Draft</div>
+                                        <div class="timeline-duration">1 hour</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-time">7:30 PM</div>
+                                        <div class="timeline-task">History Reading</div>
+                                        <div class="timeline-duration">30 min</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2050,39 +2081,47 @@
                     </ul>
                 </div>
                 <div class="feature-visual">
-                    <div class="mockup-phone">
+                    <div class="mockup-macbook">
                         <div class="mockup-screen">
+                            <div class="mockup-window-controls">
+                                <span class="mockup-dot red"></span>
+                                <span class="mockup-dot yellow"></span>
+                                <span class="mockup-dot green"></span>
+                            </div>
                             <div class="mockup-header">
-                                <div class="mockup-time">9:41</div>
-                                <div class="mockup-icons">📶 📡 🔋</div>
+                                <div class="mockup-title">AI Tutor</div>
+                                <div class="mockup-icons">💬 🤖</div>
                             </div>
                             <div class="mockup-content">
-                                <div class="mockup-title">AI Tutor</div>
-                                <div class="mockup-subtitle">Ask me anything</div>
-                                <div class="chat-message">
-                                    <div class="chat-bubble chat-user">
-                                        How do I solve quadratic equations?
-                                    </div>
+                                <div style="margin-bottom: 16px;">
+                                    <div class="mockup-subtitle">Ask me anything</div>
                                 </div>
-                                <div class="chat-message">
-                                    <div class="chat-bubble chat-ai">
-                                        Great question! There are 3 main methods:<br><br>
-                                        1. Factoring<br>
-                                        2. Completing the square<br>
-                                        3. Quadratic formula<br><br>
-                                        Which would you like to learn first?
+                                <div class="blur-overlay">
+                                    <div class="chat-message">
+                                        <div class="chat-bubble chat-user">
+                                            How do I solve quadratic equations?
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="chat-message">
-                                    <div class="chat-bubble chat-user">
-                                        The quadratic formula please
+                                    <div class="chat-message">
+                                        <div class="chat-bubble chat-ai">
+                                            Great question! There are 3 main methods:<br><br>
+                                            1. Factoring<br>
+                                            2. Completing the square<br>
+                                            3. Quadratic formula<br><br>
+                                            Which would you like to learn first?
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="chat-message">
-                                    <div class="chat-bubble chat-ai">
-                                        The quadratic formula is:<br>
-                                        x = (-b ± √(b²-4ac)) / 2a<br><br>
-                                        Let's work through an example...
+                                    <div class="chat-message">
+                                        <div class="chat-bubble chat-user">
+                                            The quadratic formula please
+                                        </div>
+                                    </div>
+                                    <div class="chat-message">
+                                        <div class="chat-bubble chat-ai">
+                                            The quadratic formula is:<br>
+                                            x = (-b ± √(b²-4ac)) / 2a<br><br>
+                                            Let's work through an example...
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2104,44 +2143,52 @@
                     </ul>
                 </div>
                 <div class="feature-visual">
-                    <div class="mockup-phone">
+                    <div class="mockup-macbook">
                         <div class="mockup-screen">
+                            <div class="mockup-window-controls">
+                                <span class="mockup-dot red"></span>
+                                <span class="mockup-dot yellow"></span>
+                                <span class="mockup-dot green"></span>
+                            </div>
                             <div class="mockup-header">
-                                <div class="mockup-time">9:41</div>
-                                <div class="mockup-icons">📶 📡 🔋</div>
+                                <div class="mockup-title">My Grades</div>
+                                <div class="mockup-icons">📊 📈</div>
                             </div>
                             <div class="mockup-content">
-                                <div class="mockup-title">My Grades</div>
-                                <div class="mockup-subtitle">Current GPA: 3.72 • Fall 2025</div>
-                                <div class="grade-card">
-                                    <div class="grade-header">
-                                        <div class="grade-subject">📐 Calculus II</div>
-                                        <div class="grade-letter">A-</div>
-                                    </div>
-                                    <div class="grade-bar">
-                                        <div class="grade-fill" style="width: 91%;"></div>
-                                    </div>
-                                    <div class="grade-percent">91.2%</div>
+                                <div style="margin-bottom: 16px;">
+                                    <div class="mockup-subtitle">Current GPA: 3.72 • Fall 2025</div>
                                 </div>
-                                <div class="grade-card">
-                                    <div class="grade-header">
-                                        <div class="grade-subject">🧪 Chemistry</div>
-                                        <div class="grade-letter" style="color: #3b82f6;">B+</div>
+                                <div class="blur-overlay">
+                                    <div class="grade-card">
+                                        <div class="grade-header">
+                                            <div class="grade-subject">📐 Calculus II</div>
+                                            <div class="grade-letter">A-</div>
+                                        </div>
+                                        <div class="grade-bar">
+                                            <div class="grade-fill" style="width: 91%;"></div>
+                                        </div>
+                                        <div class="grade-percent">91.2%</div>
                                     </div>
-                                    <div class="grade-bar">
-                                        <div class="grade-fill" style="width: 87%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                                    <div class="grade-card">
+                                        <div class="grade-header">
+                                            <div class="grade-subject">🧪 Chemistry</div>
+                                            <div class="grade-letter" style="color: #3b82f6;">B+</div>
+                                        </div>
+                                        <div class="grade-bar">
+                                            <div class="grade-fill" style="width: 87%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                                        </div>
+                                        <div class="grade-percent">87.5%</div>
                                     </div>
-                                    <div class="grade-percent">87.5%</div>
-                                </div>
-                                <div class="grade-card">
-                                    <div class="grade-header">
-                                        <div class="grade-subject">📚 English Comp</div>
-                                        <div class="grade-letter">A</div>
+                                    <div class="grade-card">
+                                        <div class="grade-header">
+                                            <div class="grade-subject">📚 English Comp</div>
+                                            <div class="grade-letter">A</div>
+                                        </div>
+                                        <div class="grade-bar">
+                                            <div class="grade-fill" style="width: 94%;"></div>
+                                        </div>
+                                        <div class="grade-percent">94.1%</div>
                                     </div>
-                                    <div class="grade-bar">
-                                        <div class="grade-fill" style="width: 94%;"></div>
-                                    </div>
-                                    <div class="grade-percent">94.1%</div>
                                 </div>
                             </div>
                         </div>
