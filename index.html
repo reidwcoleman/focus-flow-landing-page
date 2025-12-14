@@ -484,51 +484,65 @@
             margin: 40px 0;
         }
 
-        /* Screenshot Mockups - MacBook Style */
+        /* Screenshot Mockups - Clean MacBook Style */
         .mockup-macbook {
-            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-            border-radius: 12px;
-            padding: 8px;
+            background: linear-gradient(135deg, #e8e8e8 0%, #d4d4d4 100%);
+            border-radius: 10px;
+            padding: 6px;
             box-shadow:
-                0 40px 120px rgba(0, 0, 0, 0.8),
-                0 0 0 1px rgba(255, 255, 255, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                0 50px 140px rgba(0, 0, 0, 0.5),
+                0 0 0 0.5px rgba(0, 0, 0, 0.1),
+                inset 0 0.5px 1px rgba(255, 255, 255, 0.8);
             max-width: 100%;
             margin: 0 auto;
             position: relative;
         }
 
+        .mockup-macbook::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.05) 100%);
+            pointer-events: none;
+        }
+
         .mockup-macbook::after {
             content: '';
             position: absolute;
-            bottom: -12px;
+            bottom: -8px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
-            height: 12px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border-radius: 0 0 8px 8px;
-            box-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            width: 55%;
+            height: 8px;
+            background: linear-gradient(135deg, #d4d4d4 0%, #c0c0c0 100%);
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
         }
 
         .mockup-screen {
-            background: linear-gradient(135deg, #0f1729 0%, #1a2332 100%);
-            border-radius: 8px;
+            background: #ffffff;
+            border-radius: 6px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.15);
+            box-shadow:
+                inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+                0 2px 8px rgba(0, 0, 0, 0.1);
             aspect-ratio: 16 / 10;
         }
 
         .mockup-window-controls {
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid rgba(59, 130, 246, 0.08);
+            padding: 10px 12px;
+            background: rgba(246, 246, 246, 0.98);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
             display: flex;
             align-items: center;
             gap: 8px;
+            backdrop-filter: blur(20px);
         }
 
         .mockup-dot {
@@ -536,15 +550,19 @@
             height: 12px;
             border-radius: 50%;
             display: inline-block;
+            box-shadow:
+                inset 0 1px 1px rgba(255, 255, 255, 0.5),
+                0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
-        .mockup-dot.red { background: #ff5f57; }
-        .mockup-dot.yellow { background: #ffbd2e; }
-        .mockup-dot.green { background: #28c840; }
+        .mockup-dot.red { background: linear-gradient(135deg, #ff605c 0%, #ff3b30 100%); }
+        .mockup-dot.yellow { background: linear-gradient(135deg, #ffbd44 0%, #ff9500 100%); }
+        .mockup-dot.green { background: linear-gradient(135deg, #00ca4e 0%, #28cd41 100%); }
 
         .mockup-header {
-            padding: 20px 24px 16px;
-            border-bottom: 1px solid rgba(59, 130, 246, 0.08);
+            padding: 16px 20px;
+            background: rgba(249, 249, 249, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -553,42 +571,41 @@
         .mockup-time {
             font-size: 13px;
             font-weight: 500;
-            color: var(--text-muted);
+            color: #86868b;
             letter-spacing: 0.3px;
         }
 
         .mockup-icons {
-            font-size: 12px;
-            color: var(--text-muted);
+            font-size: 13px;
+            color: #86868b;
             display: flex;
-            gap: 12px;
+            gap: 14px;
         }
 
         .mockup-content {
-            padding: 24px;
+            padding: 28px 24px;
             min-height: 320px;
             position: relative;
+            background: #ffffff;
         }
 
         .blur-overlay {
-            filter: blur(8px);
-            opacity: 0.4;
+            filter: blur(12px);
+            opacity: 0.3;
             pointer-events: none;
         }
 
         .mockup-title {
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 0;
+            color: #1d1d1f;
+            letter-spacing: -0.5px;
         }
 
         .mockup-subtitle {
             font-size: 13px;
-            color: var(--text-muted);
+            color: #86868b;
             margin-bottom: 20px;
             font-weight: 500;
         }
@@ -1898,7 +1915,7 @@
             your <span class="highlight">school life</span>.
         </h1>
         <p class="hero-subtitle fade-in">
-            FocusFlow automatically organizes homework, tests, and study plans — no typing required.
+            The native Mac app that automatically organizes homework, tests, and study plans — no typing required.
         </p>
 
         <!-- Hero Email Form -->
@@ -2192,6 +2209,60 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Desktop App Section -->
+    <section style="background: linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-surface) 50%, var(--dark-bg) 100%); padding: 140px 40px; position: relative; overflow: hidden;">
+        <!-- Background decoration -->
+        <div style="position: absolute; top: 20%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%); pointer-events: none; filter: blur(80px);"></div>
+        <div style="position: absolute; bottom: 20%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%); pointer-events: none; filter: blur(80px);"></div>
+
+        <div style="max-width: 1000px; margin: 0 auto; text-align: center; position: relative; z-index: 1;">
+            <div class="section-title">Available on Desktop</div>
+            <h2 class="section-heading" style="margin-bottom: 30px;">Built for Mac. Built for students.</h2>
+
+            <p style="font-size: 20px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                FocusFlow is a <strong style="color: #fff;">native macOS application</strong> designed to seamlessly integrate with your workflow.
+                Enjoy the power of AI-driven productivity with the speed and reliability of a native desktop app.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-bottom: 60px;">
+                <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.03) 100%); border: 1px solid rgba(59, 130, 246, 0.15); border-radius: 20px; padding: 36px 28px; text-align: left;">
+                    <div style="font-size: 36px; margin-bottom: 16px;">💻</div>
+                    <h3 style="font-size: 19px; font-weight: 700; margin-bottom: 12px; color: #fff;">Native Mac Performance</h3>
+                    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Lightning-fast app built specifically for macOS. No browser required, works offline, and syncs when you're back online.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 100%); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 20px; padding: 36px 28px; text-align: left;">
+                    <div style="font-size: 36px; margin-bottom: 16px;">🔔</div>
+                    <h3 style="font-size: 19px; font-weight: 700; margin-bottom: 12px; color: #fff;">Menu Bar Integration</h3>
+                    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Access your tasks and schedule from the menu bar. Quick glance at upcoming assignments without switching apps.</p>
+                </div>
+                <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(139, 92, 246, 0.03) 100%); border: 1px solid rgba(139, 92, 246, 0.15); border-radius: 20px; padding: 36px 28px; text-align: left;">
+                    <div style="font-size: 36px; margin-bottom: 16px;">⌨️</div>
+                    <h3 style="font-size: 19px; font-weight: 700; margin-bottom: 12px; color: #fff;">Keyboard Shortcuts</h3>
+                    <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.6;">Power user? Navigate FocusFlow at the speed of thought with customizable keyboard shortcuts.</p>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 48px; backdrop-filter: blur(20px);">
+                <div style="font-size: 44px; margin-bottom: 20px;">🍎</div>
+                <h3 style="font-size: 28px; font-weight: 800; margin-bottom: 16px; color: #fff;">
+                    macOS 13 Ventura and later
+                </h3>
+                <p style="font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 28px;">
+                    Works beautifully on all Apple Silicon and Intel-based Macs.
+                    <strong style="color: var(--primary-blue-light);">Windows version coming soon.</strong>
+                </p>
+                <div style="display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap;">
+                    <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; font-size: 14px; color: var(--primary-blue-light); font-weight: 600;">
+                        <span>✓</span> Apple Silicon (M1/M2/M3)
+                    </div>
+                    <div style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; font-size: 14px; color: var(--primary-blue-light); font-weight: 600;">
+                        <span>✓</span> Intel-based Macs
                     </div>
                 </div>
             </div>
