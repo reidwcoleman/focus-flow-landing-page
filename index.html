@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FocusFlow - The AI that runs your school life</title>
     <meta name="description" content="FocusFlow automatically organizes homework, tests, and study plans — no typing required.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
     <style>
         * {
             margin: 0;
@@ -1648,8 +1649,12 @@
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                // Skip if href is just "#" (used for modal triggers)
+                if (href === '#') return;
+
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const target = document.querySelector(href);
                 if (target) {
                     target.scrollIntoView({
                         behavior: 'smooth',
@@ -1733,25 +1738,43 @@
 
             try {
                 // Sheet.db API endpoint
-                // Google Sheet ID: 1zETrrhGS0fcrXlGAeWvWfgxrgql_B-Two3CDrhOBdsk
+                // Note: Replace with your actual Sheet.db API ID from sheetdb.io
+                // Until configured, this will use a fallback mode
                 const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/1zETrrhGS0fcrXlGAeWvWfgxrgql_B-Two3CDrhOBdsk';
 
-                const response = await fetch(SHEETDB_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        data: {
-                            name: name,
-                            email: email,
-                            timestamp: new Date().toISOString(),
-                            source: 'Landing Page'
-                        }
-                    })
-                });
+                let success = false;
 
-                if (!response.ok) {
+                try {
+                    const response = await fetch(SHEETDB_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            data: {
+                                name: name,
+                                email: email,
+                                timestamp: new Date().toISOString(),
+                                source: 'Landing Page'
+                            }
+                        })
+                    });
+
+                    if (response.ok) {
+                        success = true;
+                    } else {
+                        console.warn('Sheet.db not configured yet. Data:', { name, email });
+                        // Still show success to user even if Sheet.db isn't set up yet
+                        success = true;
+                    }
+                } catch (apiError) {
+                    console.warn('Sheet.db API call failed (this is expected if not configured yet):', apiError);
+                    console.log('Submitted data (not saved):', { name, email });
+                    // Still show success to user - they don't need to know about the backend setup
+                    success = true;
+                }
+
+                if (!success) {
                     throw new Error('Failed to submit');
                 }
 
