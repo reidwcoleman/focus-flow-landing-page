@@ -120,16 +120,33 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(16, 185, 129, 0.1) 40%, transparent 70%);
             pointer-events: none;
-            animation: pulse-glow 4s ease-in-out infinite;
+            animation: pulse-glow 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 100px;
+            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            animation: pulse-glow-alt 8s ease-in-out infinite;
         }
 
         @keyframes pulse-glow {
-            0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-            50% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+            0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.7; transform: translateX(-50%) scale(1.15); }
+        }
+
+        @keyframes pulse-glow-alt {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
         }
 
         .hero h1 {
@@ -143,10 +160,17 @@
         }
 
         .hero .highlight {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 50%, #10b981 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradient-shift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .hero-subtitle {
@@ -189,12 +213,33 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
             color: white;
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            box-shadow:
+                0 8px 24px rgba(59, 130, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.5);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 16px 40px rgba(59, 130, 246, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .btn-secondary {
@@ -305,19 +350,23 @@
 
         .feature-visual {
             background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-surface-light) 100%);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 28px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(59, 130, 246, 0.1) inset;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
         .feature-visual:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 30px 80px rgba(59, 130, 246, 0.2);
-            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-12px);
+            box-shadow:
+                0 40px 100px rgba(59, 130, 246, 0.3),
+                0 0 0 1px rgba(59, 130, 246, 0.3) inset;
+            border-color: rgba(59, 130, 246, 0.5);
         }
 
         .feature-visual::before {
@@ -327,13 +376,19 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(16, 185, 129, 0.05) 50%, transparent 70%);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
         .feature-visual:hover::before {
             opacity: 1;
+            animation: rotate-gradient 20s linear infinite;
+        }
+
+        @keyframes rotate-gradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .icon-placeholder {
@@ -678,9 +733,9 @@
         .pricing-card {
             background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-surface-light) 100%);
             border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 40px;
-            transition: all 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
@@ -691,16 +746,18 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 50%, #10b981 100%);
             transform: scaleX(0);
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
         }
 
         .pricing-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px) scale(1.02);
             border-color: rgba(59, 130, 246, 0.5);
-            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.25);
+            box-shadow:
+                0 30px 80px rgba(59, 130, 246, 0.3),
+                0 0 0 1px rgba(59, 130, 246, 0.2) inset;
         }
 
         .pricing-card:hover::before {
@@ -709,11 +766,22 @@
 
         .pricing-card.featured {
             border-color: var(--primary-blue);
-            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+            box-shadow:
+                0 30px 80px rgba(59, 130, 246, 0.4),
+                0 0 60px rgba(59, 130, 246, 0.2);
+            transform: scale(1.05);
         }
 
         .pricing-card.featured::before {
             transform: scaleX(1);
+            height: 6px;
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-10px) scale(1.07);
+            box-shadow:
+                0 40px 100px rgba(59, 130, 246, 0.5),
+                0 0 80px rgba(59, 130, 246, 0.3);
         }
 
         .pricing-badge {
@@ -778,21 +846,43 @@
 
         .pricing-cta {
             width: 100%;
-            padding: 14px;
-            background: var(--primary-blue);
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow:
+                0 4px 12px rgba(59, 130, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.5s;
+        }
+
+        .pricing-cta:hover::before {
+            left: 100%;
         }
 
         .pricing-cta:hover {
-            background: #2563eb;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow:
+                0 12px 28px rgba(59, 130, 246, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         /* Footer */
@@ -1235,10 +1325,9 @@
                 <button class="pricing-cta">Get Started Free</button>
             </div>
 
-            <!-- Premium Plan -->
-            <div class="pricing-card featured">
-                <div class="pricing-badge">Most Popular</div>
-                <div class="pricing-name">Premium</div>
+            <!-- Personal Plan -->
+            <div class="pricing-card">
+                <div class="pricing-name">Personal</div>
                 <div class="pricing-price">$3.99<span>/mo</span></div>
                 <div class="pricing-period">or $29.99/year (save 37%)</div>
                 <ul class="pricing-features">
@@ -1249,21 +1338,38 @@
                     <li>Advanced analytics</li>
                     <li>Canvas LMS integration</li>
                 </ul>
-                <button class="pricing-cta">Start Premium Trial</button>
+                <button class="pricing-cta">Start Personal Trial</button>
+            </div>
+
+            <!-- Family Plan -->
+            <div class="pricing-card featured">
+                <div class="pricing-badge">Best Value</div>
+                <div class="pricing-name">Family</div>
+                <div class="pricing-price">$9.99<span>/mo</span></div>
+                <div class="pricing-period">or $89.99/year (save 25%)</div>
+                <ul class="pricing-features">
+                    <li>Everything in Personal</li>
+                    <li>Up to 3 students included</li>
+                    <li>AI Tutor (30 min/day per student)</li>
+                    <li>Family dashboard</li>
+                    <li>Shared calendar & tasks</li>
+                    <li>Parent progress reports</li>
+                </ul>
+                <button class="pricing-cta">Start Family Trial</button>
             </div>
 
             <!-- Ultra Plan -->
             <div class="pricing-card">
                 <div class="pricing-name">Ultra</div>
-                <div class="pricing-price">$8.99<span>/mo</span></div>
-                <div class="pricing-period">or $90/year (save 17%)</div>
+                <div class="pricing-price">$14.99<span>/mo</span></div>
+                <div class="pricing-period">or $149.99/year (save 17%)</div>
                 <ul class="pricing-features">
-                    <li>Everything in Premium</li>
+                    <li>Everything in Family</li>
                     <li>Unlimited AI Tutor</li>
                     <li>Advanced AI study plans</li>
                     <li>Custom integrations</li>
                     <li>Priority AI processing</li>
-                    <li>Family plan (up to 3 students)</li>
+                    <li>Dedicated success manager</li>
                 </ul>
                 <button class="pricing-cta">Start Ultra Trial</button>
             </div>
