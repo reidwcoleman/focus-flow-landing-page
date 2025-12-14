@@ -1106,6 +1106,81 @@
             display: block;
         }
 
+        /* Success Info Section */
+        .success-info {
+            display: none;
+            margin-top: 32px;
+        }
+
+        .success-info.show {
+            display: block;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        .success-info-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .success-step {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .success-step-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .success-step-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .success-step-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .success-bonus {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .success-bonus-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .success-bonus-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 4px;
+        }
+
+        .success-bonus-subtext {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
         /* Confetti Animation */
         .confetti {
             position: fixed;
@@ -1132,47 +1207,104 @@
             height: 14px;
         }
 
+        .confetti.large {
+            width: 16px;
+            height: 16px;
+        }
+
+        .confetti.small {
+            width: 6px;
+            height: 6px;
+        }
+
+        .confetti.star {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 10px solid;
+            position: relative;
+        }
+
         @keyframes confetti-fall {
             0% {
-                transform: translateY(0) rotateZ(0deg);
+                transform: translateY(-20px) rotateZ(0deg) scale(1);
+                opacity: 0;
+            }
+            10% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(100vh) rotateZ(720deg);
+                transform: translateY(120vh) rotateZ(1080deg) scale(0.8);
                 opacity: 0;
             }
         }
 
         @keyframes confetti-fall-swing {
             0% {
-                transform: translateY(0) rotateZ(0deg) translateX(0);
+                transform: translateY(-20px) rotateZ(0deg) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
                 opacity: 1;
             }
-            50% {
-                transform: translateY(50vh) rotateZ(360deg) translateX(100px);
+            30% {
+                transform: translateY(30vh) rotateZ(360deg) translateX(80px) scale(1.1);
+            }
+            60% {
+                transform: translateY(60vh) rotateZ(720deg) translateX(-80px) scale(0.9);
             }
             100% {
-                transform: translateY(100vh) rotateZ(720deg) translateX(0);
+                transform: translateY(120vh) rotateZ(1080deg) translateX(0) scale(0.7);
                 opacity: 0;
             }
         }
 
         @keyframes confetti-fall-zigzag {
             0% {
-                transform: translateY(0) rotateZ(0deg) translateX(0);
+                transform: translateY(-20px) rotateZ(0deg) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            20% {
+                transform: translateY(20vh) rotateZ(180deg) translateX(-60px) scale(1.1);
+            }
+            40% {
+                transform: translateY(40vh) rotateZ(360deg) translateX(60px) scale(0.95);
+            }
+            60% {
+                transform: translateY(60vh) rotateZ(540deg) translateX(-60px) scale(1.05);
+            }
+            80% {
+                transform: translateY(80vh) rotateZ(720deg) translateX(40px) scale(0.9);
+            }
+            100% {
+                transform: translateY(120vh) rotateZ(1080deg) translateX(0) scale(0.7);
+                opacity: 0;
+            }
+        }
+
+        @keyframes confetti-fall-spiral {
+            0% {
+                transform: translateY(-20px) rotateZ(0deg) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
                 opacity: 1;
             }
             25% {
-                transform: translateY(25vh) rotateZ(180deg) translateX(-50px);
+                transform: translateY(25vh) rotateZ(360deg) translateX(100px) scale(1.2);
             }
             50% {
-                transform: translateY(50vh) rotateZ(360deg) translateX(50px);
+                transform: translateY(50vh) rotateZ(720deg) translateX(-100px) scale(0.8);
             }
             75% {
-                transform: translateY(75vh) rotateZ(540deg) translateX(-50px);
+                transform: translateY(75vh) rotateZ(1080deg) translateX(100px) scale(1.1);
             }
             100% {
-                transform: translateY(100vh) rotateZ(720deg) translateX(0);
+                transform: translateY(120vh) rotateZ(1440deg) translateX(0) scale(0.6);
                 opacity: 0;
             }
         }
@@ -1804,6 +1936,49 @@
                     Join Waitlist
                 </button>
                 <div class="form-message" id="formMessage"></div>
+
+                <!-- Success Info Section -->
+                <div class="success-info" id="successInfo">
+                    <div class="success-info-title">What Happens Next?</div>
+
+                    <div class="success-step">
+                        <div class="success-step-icon">📧</div>
+                        <div class="success-step-content">
+                            <h4>Confirmation Email</h4>
+                            <p>Check your inbox for a welcome email with your waitlist position.</p>
+                        </div>
+                    </div>
+
+                    <div class="success-step">
+                        <div class="success-step-icon">🔔</div>
+                        <div class="success-step-content">
+                            <h4>Monthly Updates</h4>
+                            <p>Get exclusive behind-the-scenes updates on our development progress.</p>
+                        </div>
+                    </div>
+
+                    <div class="success-step">
+                        <div class="success-step-icon">⚡</div>
+                        <div class="success-step-content">
+                            <h4>Early Access Invitation</h4>
+                            <p>Be first to try FocusFlow when we launch our beta in Q1 2026.</p>
+                        </div>
+                    </div>
+
+                    <div class="success-step">
+                        <div class="success-step-icon">💰</div>
+                        <div class="success-step-content">
+                            <h4>Founding Member Pricing</h4>
+                            <p>Lock in exclusive lifetime discounts reserved for early supporters.</p>
+                        </div>
+                    </div>
+
+                    <div class="success-bonus">
+                        <div class="success-bonus-icon">🎁</div>
+                        <div class="success-bonus-text">Special Bonus</div>
+                        <div class="success-bonus-subtext">Waitlist members get 3 months free when we launch!</div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -1954,25 +2129,32 @@
 
                 // Show success checkmark
                 const successCheckmark = document.getElementById('successCheckmark');
+                const successInfo = document.getElementById('successInfo');
                 successCheckmark.classList.add('show');
                 submitBtn.style.display = 'none';
 
                 // Show success message
                 formMessage.className = 'form-message success';
-                formMessage.textContent = '🎉 Welcome to the waitlist! You\'re in!';
+                formMessage.textContent = '🎉 You\'re on the list! Here\'s what happens next:';
+
+                // Show success info after a short delay
+                setTimeout(() => {
+                    successInfo.classList.add('show');
+                }, 800);
 
                 // Reset form
                 waitlistForm.reset();
 
-                // Close modal after 4 seconds
+                // Close modal after 8 seconds (longer to read info)
                 setTimeout(() => {
                     modal.classList.remove('active');
                     document.body.style.overflow = '';
                     formMessage.className = 'form-message';
                     formMessage.textContent = '';
                     successCheckmark.classList.remove('show');
+                    successInfo.classList.remove('show');
                     submitBtn.style.display = 'block';
-                }, 4000);
+                }, 8000);
 
             } catch (error) {
                 console.error('Waitlist submission error:', error);
@@ -1986,30 +2168,39 @@
             }
         });
 
-        // Confetti creation function - EPIC VERSION!
+        // Confetti creation function - ULTRA EPIC VERSION!
         function createConfetti() {
-            const colors = ['#3b82f6', '#60a5fa', '#10b981', '#34d399', '#8b5cf6', '#a78bfa', '#ec4899', '#f59e0b'];
-            const shapes = ['square', 'circle', 'rectangle'];
-            const animations = ['confetti-fall', 'confetti-fall-swing', 'confetti-fall-zigzag'];
-            const confettiCount = 150; // Increased from 50!
+            const colors = ['#3b82f6', '#60a5fa', '#10b981', '#34d399', '#8b5cf6', '#a78bfa', '#ec4899', '#f59e0b', '#f472b6', '#facc15'];
+            const shapes = ['square', 'circle', 'rectangle', 'star'];
+            const sizes = ['small', 'large', ''];
+            const animations = ['confetti-fall', 'confetti-fall-swing', 'confetti-fall-zigzag', 'confetti-fall-spiral'];
+            const confettiCount = 250; // MASSIVE increase from 150!
 
             for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
 
                 // Random shape
                 const shape = shapes[Math.floor(Math.random() * shapes.length)];
-                confetti.className = `confetti ${shape}`;
+                const size = sizes[Math.floor(Math.random() * sizes.length)];
+                confetti.className = `confetti ${shape} ${size}`.trim();
 
                 // Random color
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                if (shape === 'star') {
+                    confetti.style.borderBottomColor = color;
+                } else {
+                    confetti.style.backgroundColor = color;
+                }
 
                 // Position across entire viewport width
                 confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = '-20px';
+                confetti.style.top = '-30px';
 
-                // Random animation type
+                // Random animation type with varied durations
                 const animation = animations[Math.floor(Math.random() * animations.length)];
-                confetti.style.animation = `${animation} ${(Math.random() * 2 + 3)}s linear ${Math.random() * 0.5}s forwards`;
+                const duration = Math.random() * 3 + 4; // 4-7 seconds
+                const delay = Math.random() * 0.8; // 0-0.8s delay
+                confetti.style.animation = `${animation} ${duration}s linear ${delay}s forwards`;
 
                 // Add to body for full-page effect
                 document.body.appendChild(confetti);
@@ -2017,7 +2208,7 @@
                 // Remove confetti after animation
                 setTimeout(() => {
                     confetti.remove();
-                }, 5500);
+                }, (duration + delay) * 1000 + 500);
             }
         }
     </script>
